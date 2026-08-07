@@ -24,6 +24,7 @@ export class List implements OnInit, OnDestroy {
   protected readonly persons: WritableSignal<Person[]> = signal<Person[]>([]);
   protected readonly filteredPersons: WritableSignal<Person[]> = signal<Person[]>(this.persons());
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  protected readonly error: WritableSignal<string | null> = signal<string | null>(null);
 
   protected searchQuery$: Subject<string> = new Subject<string>();
   private destroy$ = new Subject<void>();
@@ -72,6 +73,8 @@ export class List implements OnInit, OnDestroy {
           this.filteredPersons.set(persons);
         }),
       )
-      .subscribe(() => {});
+      .subscribe({
+        error: () => this.error.set('Failed to load persons data.'),
+      });
   }
 }
