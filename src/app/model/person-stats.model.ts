@@ -24,11 +24,16 @@ export function calculatePersonStats(persons: Person[]): PersonStats {
       counts[value] = (counts[value] || 0) + 1;
     });
 
-    return Object.entries(counts).map(([label, count]) => ({
-      label,
-      count,
-      percentage: totalPersons > 0 ? (count / totalPersons) * 100 : 0,
-    }));
+    return Object.entries(counts)
+      .map(([label, count]) => ({
+        label,
+        count,
+        percentage: totalPersons > 0 ? (count / totalPersons) * 100 : 0,
+      }))
+      .sort((a, b) => b.percentage - a.percentage)
+      .filter((item) => {
+        return item.percentage >= 0.5
+      });
   };
 
   return {
