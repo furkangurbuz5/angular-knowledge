@@ -1,0 +1,51 @@
+@if (isLoading()) {
+  <div class="loading">Loading...</div>
+} @else if (error()) {
+  <div class="error">{{ error() }}</div>
+} @else {
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+
+    <div class="stats-summary">
+      <app-stats-card
+        title="Total Persons"
+        [value]="stats().totalPersons"
+        subtitle="Total count of persons" />
+
+      <app-stats-card
+        title="Honda Users"
+        [value]="getPercentageByLabel(stats().carStats, 'Honda')"
+        subtitle="% of persons driving a Honda" />
+
+      <app-stats-card
+        title="From Netherlands"
+        [value]="getPercentageByLabel(stats().countryStats, 'Netherlands')"
+        subtitle="% of persons from Netherlands" />
+
+      <app-stats-card
+        title="Unique Cities"
+        [value]="stats().cityStats.length"
+        subtitle="Number of unique cities" />
+    </div>
+
+    <div class="charts-row">
+      <app-distribution-chart
+        title="Car Distribution"
+        [data]="stats().carStats" />
+
+      <app-distribution-chart
+        title="Country Distribution"
+        [data]="stats().countryStats" />
+    </div>
+
+    <div class="charts-row">
+      <app-distribution-chart
+        title="Bank Distribution"
+        [data]="stats().bankStats" />
+
+      <app-distribution-chart
+        title="City Distribution"
+        [data]="stats().cityStats" />
+    </div>
+  </div>
+}

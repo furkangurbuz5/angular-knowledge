@@ -1,0 +1,41 @@
+.person-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.action-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.action-button.edit {
+  background-color: #2196F3;
+  color: white;
+}
+
+.action-button.edit:hover {
+  background-color: #0b7dda;
+}
+
+.action-button.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.action-button.delete:hover {
+  background-color: #d32f2f;
+}
+
+.action-button.back {
+  background-color: #9E9E9E;
+  color: white;
+}
+
+.action-button.back:hover {
+  background-color: #757575;
+}

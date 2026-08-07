@@ -1,0 +1,31 @@
+.stats-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+}
+
+.stats-card-title {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 8px;
+}
+
+.stats-card-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stats-card-subtitle {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 4px;
+}

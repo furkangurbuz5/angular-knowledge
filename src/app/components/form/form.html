@@ -1,0 +1,123 @@
+<div class="form-container">
+  <h2>{{ person() ? 'Edit Person' : 'Add New Person' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-field">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        placeholder="Enter first name">
+      @if (form.controls.firstName.invalid && (form.controls.firstName.dirty || form.controls.firstName.touched)) {
+        <div class="error-message">
+          @if (form.controls.firstName.errors?.['required']) {
+            First name is required.
+          } @else if (form.controls.firstName.errors?.['minlength']) {
+            First name must be at least 2 characters.
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        placeholder="Enter last name">
+      @if (form.controls.lastName.invalid && (form.controls.lastName.dirty || form.controls.lastName.touched)) {
+        <div class="error-message">
+          @if (form.controls.lastName.errors?.['required']) {
+            Last name is required.
+          } @else if (form.controls.lastName.errors?.['minlength']) {
+            Last name must be at least 2 characters.
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="Enter email">
+      @if (form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)) {
+        <div class="error-message">
+          @if (form.controls.email.errors?.['required']) {
+            Email is required.
+          } @else if (form.controls.email.errors?.['email']) {
+            Please enter a valid email address.
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Car (Dropdown) -->
+    <div class="form-field">
+      <label for="car">Car</label>
+      <select id="car" formControlName="car">
+        <option value="">Select a car</option>
+        @for (car of carOptions; track car) {
+          <option [value]="car">{{ car }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="city">City</label>
+      <input
+        id="city"
+        type="text"
+        formControlName="city"
+        placeholder="Enter city">
+      @if (form.controls.city.invalid && (form.controls.city.dirty || form.controls.city.touched)) {
+        <div class="error-message">
+          City must be at least 2 characters.
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="countryOfOrigin">Country</label>
+      <select id="countryOfOrigin" formControlName="countryOfOrigin">
+        <option value="">Select a country</option>
+        @for (country of countryOptions; track country) {
+          <option [value]="country">{{ country }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="bank">Bank</label>
+      <input
+        id="bank"
+        type="text"
+        formControlName="bank"
+        placeholder="Enter bank">
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="button secondary"
+        [disabled]="isSubmitting()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="form.invalid || isSubmitting()"
+        class="button primary">
+        @if (isSubmitting()) {
+          <span class="spinner"></span> Saving...
+        } @else {
+          {{ person() ? 'Save Changes' : 'Add Person' }}
+        }
+      </button>
+    </div>
+  </form>
+</div>

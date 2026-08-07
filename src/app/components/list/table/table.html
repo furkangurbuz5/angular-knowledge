@@ -1,0 +1,28 @@
+<table class="data-table">
+  <thead>
+  <tr>
+    <th (click)="onSort('id')" class="sortable">
+      @if (sortField() === 'id') {
+        <span class="sort-icon">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+      }
+      ID
+    </th>
+    <th (click)="onSort('firstName')" class="sortable">
+      @if (sortField() === 'firstName') {
+        <span class="sort-icon">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+      }
+      Name
+    </th>
+    <th>Email</th>
+    <th>Car</th>
+    <th>City</th>
+    <th>Country</th>
+    <th>Bank</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (person of sortedPersons(); track person.id) {
+      <app-row [person]="person"></app-row>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    {{ person().id }}
+  </td>
+  <td>
+    <a
+      [routerLink]="['/person', person().id]">
+      {{ person().firstName }}
+      {{ person().lastName }}
+    </a>
+  </td>
+  <td>{{ person().email }}</td>
+  <td>{{ person().car }}</td>
+  <td>{{ person().city }}</td>
+  <td>{{ person().countryOfOrigin }}</td>
+  <td>{{ person().bank }}</td>
+</tr>

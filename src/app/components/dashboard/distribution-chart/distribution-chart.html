@@ -1,0 +1,20 @@
+<div class="distribution-chart">
+  <h3>{{ title() }}</h3>
+  <div class="chart-container">
+    @for (item of data(); track item.label) {
+      <div class="chart-bar-container">
+        @if (item.label.length === 0) {
+          <div class="chart-bar-label"> No car</div>
+        } @else {
+          <div class="chart-bar-label">{{ item.label }}</div>
+        }
+        <div
+          class="chart-bar"
+          [style.width.%]="item.percentage"
+          [style.background-color]="getBarColor(item.label)">
+        </div>
+        <div class="chart-bar-value">{{ item.percentage.toFixed(1) }}%</div>
+      </div>
+    }
+  </div>
+</div>

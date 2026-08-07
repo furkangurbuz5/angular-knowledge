@@ -1,0 +1,7 @@
+@if (!isLoading()) {
+  <app-search (search)="onSearch($event)"></app-search>
+  <app-table [persons]="filteredPersons()"></app-table>
+} @else {
+
+}
+

@@ -1,0 +1,17 @@
+<div class="person-actions">
+  <button
+    class="action-button edit"
+    (click)="onEdit.emit(person())">
+    Edit
+  </button>
+  <button
+    class="action-button delete"
+    (click)="onDelete.emit(person())">
+    Delete
+  </button>
+  <button
+    class="action-button back"
+    (click)="onBack.emit()">
+    Back to List
+  </button>
+</div>

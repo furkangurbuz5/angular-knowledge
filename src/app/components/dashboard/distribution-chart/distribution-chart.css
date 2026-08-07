@@ -1,0 +1,45 @@
+.distribution-chart {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.distribution-chart h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chart-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-bar-label {
+  width: 120px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: right;
+}
+
+.chart-bar {
+  height: 20px;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.chart-bar-value {
+  width: 50px;
+  font-size: 0.8rem;
+  color: #666;
+  text-align: right;
+}

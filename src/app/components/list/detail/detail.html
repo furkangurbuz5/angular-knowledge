@@ -1,0 +1,13 @@
+
+@if (isLoading()) {
+  <div class="loading-spinner">Loading...</div>
+} @else if (error()) {
+  <div class="error-message">{{ error() }}</div>
+} @else if (person()) {
+  <div class="person-detail-container">
+    <app-card [person]="person()!" />
+    <app-action
+      [person]="person()!"
+      (onBack)="onBack()" />
+  </div>
+}
