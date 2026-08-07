@@ -3,6 +3,7 @@ import { Detail } from './components/list/detail/detail';
 import { List } from './components/list/list';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Form } from './components/form/form';
+import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 
 export const routes: Routes = [
   {
@@ -21,4 +22,8 @@ export const routes: Routes = [
     path: 'add',
     component: Form,
   },
+  {
+    path: 'rxjsdemo',
+    component: RxjsDemo,
+  }
 ];

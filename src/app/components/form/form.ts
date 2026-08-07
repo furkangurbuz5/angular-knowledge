@@ -2,6 +2,8 @@ import { Component, inject, input, OnInit, output, signal } from '@angular/core'
 import { Person } from '../../model/person.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PersonForm } from '../../model/person-form.model';
+import { PersonService } from '../../service/person-service';
+import { CreatePersonRequest } from '../../dto/person-request.dto';
 
 @Component({
   selector: 'app-form',
@@ -46,6 +48,7 @@ export class Form implements OnInit {
     countryOfOrigin: this.fb.control(this.person()?.countryOfOrigin ?? '', { nonNullable: true }),
     bank: this.fb.control(this.person()?.bank ?? '', { nonNullable: true }),
   });
+  private personService = inject(PersonService);
 
   ngOnInit(): void {}
 
@@ -54,8 +57,7 @@ export class Form implements OnInit {
       this.isSubmitting.set(true);
       const formControls = this.form.controls;
       //TODO DTO?
-      const personData: Person = {
-        id: this.person()?.id || 0,
+      const personData: CreatePersonRequest = {
         firstName: formControls.firstName.value,
         lastName: formControls.lastName.value,
         email: formControls.email.value,
@@ -64,7 +66,9 @@ export class Form implements OnInit {
         countryOfOrigin: formControls.countryOfOrigin.value,
         bank: formControls.bank.value,
       };
-      this.save.emit(personData);
+      this.personService.addPerson(personData).subscribe((data) => {
+        console.log(data);
+      });
       this.isSubmitting.set(false);
     }
   }

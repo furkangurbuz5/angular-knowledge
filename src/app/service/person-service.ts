@@ -3,6 +3,7 @@ import { PersonClient } from '../client/person-client';
 import { map, Observable, of, take, tap } from 'rxjs';
 import { Person } from '../model/person.model';
 import { mapResponseToPerson, PersonResponse } from '../dto/person-response.dto';
+import { CreatePersonRequest } from '../dto/person-request.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +34,18 @@ export class PersonService {
         this.personCache.set(person.id.toString(), person);
       }),
     );
+  }
+
+  addPerson(person: CreatePersonRequest) {
+    return this.personClient.addPerson(person).pipe(
+      take(1),
+      map((personResponse) => {
+        return mapResponseToPerson(personResponse);
+      }),
+    );
+  }
+
+  searchPersons(query: string | null): Observable<Person[]> {
+    return of([]);
   }
 }
