@@ -9,21 +9,26 @@ export const routes: Routes = [
   {
     path: 'person/:id',
     component: Detail,
+    title: 'Person details',
   },
   {
     path: 'persons',
     component: List,
+    title: 'People',
   },
   {
     path: 'dashboard',
     component: Dashboard,
+    title: 'Dashboard',
   },
   {
     path: 'add',
     component: Form,
+    title: 'Add a person',
   },
   {
     path: 'rxjsdemo',
     component: RxjsDemo,
-  }
+    title: 'RxJS Demo',
+  },
 ];
