@@ -5,7 +5,7 @@
   <!-- ✅ Proper RxJS Usage: Debounced Search -->
   <section class="demo-section">
     <h3>✅ Proper RxJS: Debounced Search</h3>
-    <p>Type to search for persons (300ms debounce, distinct until changed).</p>
+    <p>Type to search by name for persons (300ms debounce, distinct until changed).</p>
     <input
       type="text"
       [formControl]="searchControl"
@@ -57,50 +57,8 @@
     <p class="success">✅ Cleanup handled by `takeUntil(this.destroy$)`.</p>
   </section>
 
-  <!-- 💡 Explanation -->
   <section class="demo-section">
-    <h3>💡 Key Lessons</h3>
     <div class="explanation">
-      <h4>Why Memory Leaks Happen</h4>
-      <ul>
-        <li>
-          <strong>Forgotten Subscriptions:</strong>
-          Observables like <code>interval</code>, <code>fromEvent</code>, or HTTP requests
-          keep running unless unsubscribed.
-        </li>
-        <li>
-          <strong>Closures:</strong>
-          Callbacks (e.g., in <code>setInterval</code>) retain references to the component,
-          preventing garbage collection.
-        </li>
-        <li>
-          <strong>Async Pipes:</strong>
-          The <code>async</code> pipe in templates <strong>auto-unsubscribes</strong>,
-          but manual subscriptions (e.g., in `.subscribe()`) do not.
-        </li>
-      </ul>
-
-      <h4>How to Prevent Leaks</h4>
-      <ul>
-        <li>
-          <strong><code>takeUntil</code>:</strong>
-          Use a <code>Subject</code> (e.g., <code>destroy$</code>) to unsubscribe in <code>ngOnDestroy</code>.
-        </li>
-        <li>
-          <strong><code>async</code> Pipe:</strong>
-          Prefer it in templates (auto-cleanup).
-        </li>
-        <li>
-          <strong>Unsubscribe Manually:</strong>
-          Store subscriptions and call <code>unsubscribe()</code> in <code>ngOnDestroy</code>.
-        </li>
-        <li>
-          <strong>Linting:</strong>
-          Use ESLint rules like <code>rxjs-no-unbounded-observables</code> to catch leaks.
-        </li>
-      </ul>
-
-      <h4>RxJS Operators Used Here</h4>
       <ul>
         <li><code>debounceTime(300)</code>: Waits 300ms after the last keystroke.</li>
         <li><code>distinctUntilChanged()</code>: Skips duplicate values.</li>

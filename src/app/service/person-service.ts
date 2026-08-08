@@ -36,6 +36,14 @@ export class PersonService {
     );
   }
 
+  getPersonByFirstName(name: string) {
+    return this.personClient.getPersonByName(name).pipe(
+      map((personResponse: PersonResponse[]): Person[] => {
+        return personResponse.map(mapResponseToPerson);
+      }),
+    );
+  }
+
   addPerson(person: CreatePersonRequest) {
     return this.personClient.addPerson(person).pipe(
       take(1),

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { PersonResponse } from '../dto/person-response.dto';
 import { Observable } from 'rxjs';
 import { CreatePersonRequest } from '../dto/person-request.dto';
@@ -16,6 +16,12 @@ export class PersonClient {
 
   getPersonById(id: string): Observable<PersonResponse> {
     return this.httpClient.get<PersonResponse>(`http://localhost:8080/api/v1/persons/${id}`);
+  }
+
+  getPersonByName(name: string) {
+    const params = new HttpParams().set('firstName', name);
+
+    return this.httpClient.get<PersonResponse[]>(`http://localhost:8080/api/v1/persons`, { params });
   }
 
   addPerson(person: CreatePersonRequest): Observable<PersonResponse> {

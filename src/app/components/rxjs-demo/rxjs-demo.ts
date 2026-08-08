@@ -20,12 +20,11 @@ import { Person } from '../../model/person.model';
   styleUrl: './rxjs-demo.css',
 })
 export class RxjsDemo implements OnInit, OnDestroy {
-  // --- Proper RxJS Usage (Search) ---
   searchControl = new FormControl('');
   searchResults = signal<Person[]>([]);
   isSearching = signal(false);
   searchQuery = signal('');
-  // --- Memory Leak Demo ---
+
   leakyCounter = signal(0);
   fixedCounter = signal(0);
   private personService = inject(PersonService);
@@ -34,7 +33,6 @@ export class RxjsDemo implements OnInit, OnDestroy {
   private fixedInterval$?: Observable<number>;
 
   ngOnInit(): void {
-    // ✅ Proper RxJS: Debounced search
     this.searchControl.valueChanges
       .pipe(
         tap(() => this.isSearching.set(true)),
@@ -42,7 +40,7 @@ export class RxjsDemo implements OnInit, OnDestroy {
         distinctUntilChanged(), // Ignore if same as previous
         switchMap((query) => {
           return this.personService
-            .searchPersons(query)
+            .getPersonByFirstName(query!)
             .pipe(tap(() => this.isSearching.set(false)));
         }),
         takeUntil(this.destroy$), // Auto-unsubscribe on destroy
@@ -52,16 +50,13 @@ export class RxjsDemo implements OnInit, OnDestroy {
         this.searchQuery.set(this.searchControl.value || '');
       });
 
-    // ⚠️ Memory Leak Example: setInterval (not RxJS, but demonstrates the concept)
-    // Note: Using setInterval instead of Observable.interval to avoid RxJS cleanup
     this.leakyIntervalId = window.setInterval(() => {
       this.leakyCounter.update((c) => c + 1);
     }, 1000);
 
-    // ✅ Fixed Version: RxJS interval with takeUntil
     this.fixedInterval$ = interval(1000).pipe(
       tap(() => this.fixedCounter.update((c) => c + 1)),
-      takeUntil(this.destroy$), // Proper cleanup
+      takeUntil(this.destroy$),
     );
   }
 
@@ -70,14 +65,11 @@ export class RxjsDemo implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
 
-    // ⚠️ The leaky setInterval is NOT cleaned up!
-    // This simulates a memory leak (e.g., forgotten subscription)
     if (this.leakyIntervalId) {
-      // window.clearInterval(this.leakyIntervalId); // Uncomment to fix
+      // window.clearInterval(this.leakyIntervalId);
     }
   }
 
-  // Simulate fixing the leak (for demo purposes)
   fixLeak(): void {
     if (this.leakyIntervalId) {
       window.clearInterval(this.leakyIntervalId);
