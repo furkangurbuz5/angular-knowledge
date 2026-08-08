@@ -36,14 +36,14 @@ export class RxjsDemo implements OnInit, OnDestroy {
     this.searchControl.valueChanges
       .pipe(
         tap(() => this.isSearching.set(true)),
-        debounceTime(300), // Wait 300ms after last keystroke
-        distinctUntilChanged(), // Ignore if same as previous
+        debounceTime(300),
+        distinctUntilChanged(),
         switchMap((query) => {
           return this.personService
-            .getPersonByFirstName(query!)
+            .getPersonsByFirstName(query!)
             .pipe(tap(() => this.isSearching.set(false)));
         }),
-        takeUntil(this.destroy$), // Auto-unsubscribe on destroy
+        takeUntil(this.destroy$),
       )
       .subscribe((results) => {
         this.searchResults.set(results);

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PersonClient } from '../client/person-client';
-import { map, Observable, of, take, tap } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { Person } from '../model/person.model';
 import { mapResponseToPerson, PersonResponse } from '../dto/person-response.dto';
 import { CreatePersonRequest } from '../dto/person-request.dto';
@@ -10,7 +10,6 @@ import { CreatePersonRequest } from '../dto/person-request.dto';
 })
 export class PersonService {
   private readonly personClient: PersonClient = inject(PersonClient);
-  private readonly personCache: Map<string, Person> = new Map<string, Person>();
 
   getAllPersons(): Observable<Person[]> {
     return this.personClient.getAllPersons().pipe(
@@ -22,22 +21,16 @@ export class PersonService {
   }
 
   getPersonById(id: string) {
-    if (this.personCache.get(id)) {
-      return of(this.personCache.get(id)!);
-    }
     return this.personClient.getPersonById(id).pipe(
       take(1),
       map((personResponse: PersonResponse): Person => {
         return mapResponseToPerson(personResponse);
       }),
-      tap((person) => {
-        this.personCache.set(person.id.toString(), person);
-      }),
     );
   }
 
-  getPersonByFirstName(name: string) {
-    return this.personClient.getPersonByName(name).pipe(
+  getPersonsByFirstName(name: string): Observable<Person[]> {
+    return this.personClient.getPersonsByName(name).pipe(
       map((personResponse: PersonResponse[]): Person[] => {
         return personResponse.map(mapResponseToPerson);
       }),
@@ -53,7 +46,12 @@ export class PersonService {
     );
   }
 
-  searchPersons(query: string | null): Observable<Person[]> {
-    return of([]);
+  deletePersonById(id: number) {
+    return this.personClient.deletePersonById(id).pipe(
+      take(1),
+      map((personResponse) => {
+        return mapResponseToPerson(personResponse);
+      }),
+    );
   }
 }

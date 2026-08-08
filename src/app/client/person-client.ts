@@ -18,13 +18,19 @@ export class PersonClient {
     return this.httpClient.get<PersonResponse>(`http://localhost:8080/api/v1/persons/${id}`);
   }
 
-  getPersonByName(name: string) {
+  getPersonsByName(name: string): Observable<PersonResponse[]> {
     const params = new HttpParams().set('firstName', name);
 
-    return this.httpClient.get<PersonResponse[]>(`http://localhost:8080/api/v1/persons`, { params });
+    return this.httpClient.get<PersonResponse[]>(`http://localhost:8080/api/v1/persons`, {
+      params,
+    });
   }
 
   addPerson(person: CreatePersonRequest): Observable<PersonResponse> {
     return this.httpClient.post<PersonResponse>('http://localhost:8080/api/v1/persons', person);
+  }
+
+  deletePersonById(id: number): Observable<PersonResponse> {
+    return this.httpClient.delete<PersonResponse>(`http://localhost:8080/api/v1/persons/${id}`);
   }
 }
