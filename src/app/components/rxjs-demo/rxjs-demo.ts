@@ -28,8 +28,8 @@ export class RxjsDemo implements OnInit, OnDestroy {
   leakyCounter = signal(0);
   fixedCounter = signal(0);
   private personService = inject(PersonService);
-  private destroy$ = new Subject<void>(); // For cleanup
-  private leakyIntervalId?: number; // Intentionally NOT an Observable (for demo)
+  private destroy$ = new Subject<void>();
+  private leakyIntervalId?: number;
   private fixedInterval$?: Observable<number>;
 
   ngOnInit(): void {
@@ -50,18 +50,19 @@ export class RxjsDemo implements OnInit, OnDestroy {
         this.searchQuery.set(this.searchControl.value || '');
       });
 
-    this.leakyIntervalId = window.setInterval(() => {
-      this.leakyCounter.update((c) => c + 1);
-    }, 1000);
+    // this.leakyIntervalId = window.setInterval(() => {
+    //   this.leakyCounter.update((c) => c + 1);
+    // }, 1000);
 
     this.fixedInterval$ = interval(1000).pipe(
       tap(() => this.fixedCounter.update((c) => c + 1)),
       takeUntil(this.destroy$),
     );
+
+    this.fixedInterval$.subscribe();
   }
 
   ngOnDestroy(): void {
-    // Clean up RxJS subscriptions
     this.destroy$.next();
     this.destroy$.complete();
 
