@@ -4,6 +4,7 @@ import { List } from './components/list/list';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Form } from './components/form/form';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
+import { Property } from './components/foods/property/property';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,11 @@ export const routes: Routes = [
     path: 'add',
     component: Form,
     title: 'Add a person',
+  },
+  {
+    path: 'add-property',
+    component: Property,
+    title: 'Add a property',
   },
   {
     path: 'rxjsdemo',
