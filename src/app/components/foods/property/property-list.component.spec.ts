@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Property } from './property';
+import { PropertyList } from './property-list.component';
 
 describe('Property', () => {
-  let component: Property;
-  let fixture: ComponentFixture<Property>;
+  let component: PropertyList;
+  let fixture: ComponentFixture<PropertyList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Property],
+      imports: [PropertyList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Property);
+    fixture = TestBed.createComponent(PropertyList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

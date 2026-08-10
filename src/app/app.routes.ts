@@ -4,14 +4,20 @@ import { List } from './components/list/list';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Form } from './components/form/form';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
-import { Property } from './components/foods/property/property';
+import { PropertyList } from './components/foods/property/property-list.component';
 import { Ingredient } from './components/foods/ingredient/ingredient';
+import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
 
 export const routes: Routes = [
   {
     path: 'person/:id',
     component: Detail,
     title: 'Person details',
+  },
+  {
+    path: 'property/:id',
+    component: PropertyDetail,
+    title: 'Property details',
   },
   {
     path: 'persons',
@@ -34,8 +40,8 @@ export const routes: Routes = [
     title: 'Add a food',
   },
   {
-    path: 'add-property',
-    component: Property,
+    path: 'properties',
+    component: PropertyList,
     title: 'Add a property',
   },
   {

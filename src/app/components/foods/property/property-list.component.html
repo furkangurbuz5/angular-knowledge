@@ -1,0 +1,32 @@
+<h2>Add a property</h2>
+
+@for (property of properties(); track property.id) {
+
+  <p>
+    <a
+      [routerLink]="['/property', property.id]">
+      {{ property.name }}
+    </a>
+  </p>
+}
+
+<label for="add_property">Property</label>
+<input
+  id="add_property"
+  type="text"
+  [(ngModel)]="property"
+/>
+
+<label for="add_property_unit">Unit(g/ml)</label>
+<select
+  id="add_property_unit"
+  type="text"
+  [(ngModel)]="unit"
+>
+  <option>g</option>
+  <option>ml</option>
+  <option>amount</option>
+</select>
+
+
+<button (click)="addProperty()">Add</button>

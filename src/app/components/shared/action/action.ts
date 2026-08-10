@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Person } from '../../../../model/person.model';
+import { Person } from '../../../model/person.model';
 
 @Component({
   selector: 'app-action',
@@ -7,9 +7,9 @@ import { Person } from '../../../../model/person.model';
   templateUrl: './action.html',
   styleUrl: './action.css',
 })
-export class Action {
-  person = input.required<Person>();
-  onEdit = output<Person>();
-  onDelete = output<Person>();
+export class Action<T> {
+  item = input.required<T>();
+  onEdit = output<T>();
+  onDelete = output<T>();
   onBack = output<void>();
 }

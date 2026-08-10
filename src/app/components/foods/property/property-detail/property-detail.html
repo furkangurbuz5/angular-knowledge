@@ -3,13 +3,16 @@
   <div class="loading-spinner">Loading...</div>
 } @else if (hasError()) {
   <div class="error-message">{{ errorMessage() }}</div>
-} @else if (person()) {
-  <div class="person-detail-container">
-    <app-card [person]="person()!" />
+} @else if (property()) {
+  <div class="property-detail-container">
+    <app-property-card
+    [property]="property()!"
+    >
+
+    </app-property-card>
     <app-action
-      [item]="person()!"
+      [item]="property()"
       (onBack)="onBack()"
-      (onDelete)="onDelete($event)"
-    />
+    ></app-action>
   </div>
 }

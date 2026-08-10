@@ -3,7 +3,7 @@ import { Person } from '../../../model/person.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '../../../service/person-service';
 import { Card } from './card/card';
-import { Action } from './action/action';
+import { Action } from '../../shared/action/action';
 import { finalize, take } from 'rxjs';
 
 @Component({

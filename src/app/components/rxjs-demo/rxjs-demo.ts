@@ -3,6 +3,7 @@ import { PersonService } from '../../service/person-service';
 import {
   debounceTime,
   distinctUntilChanged,
+  fromEvent,
   interval,
   Observable,
   Subject,
@@ -33,6 +34,7 @@ export class RxjsDemo implements OnInit, OnDestroy {
   private fixedInterval$?: Observable<number>;
 
   ngOnInit(): void {
+    this.startObservingMouseMovement();
     this.searchControl.valueChanges
       .pipe(
         tap(() => this.isSearching.set(true)),
@@ -76,5 +78,21 @@ export class RxjsDemo implements OnInit, OnDestroy {
       window.clearInterval(this.leakyIntervalId);
       this.leakyIntervalId = undefined;
     }
+  }
+
+  startObservingMouseMovement(): void {
+    console.log('startObservingMouseMovement');
+    const canvas = document.getElementById('demo-container') as HTMLDivElement | null;
+
+    if (!canvas) {
+      console.error('Canvas element not found');
+      return;
+    }
+
+    const mouseMove$ = fromEvent<MouseEvent>(canvas, 'mousemove');
+
+    mouseMove$.subscribe((event: MouseEvent) => {
+      console.log(`Mouse position: X: ${event.clientX}, Y: ${event.clientY}`);
+    });
   }
 }
