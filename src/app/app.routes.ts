@@ -5,8 +5,9 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { Form } from './components/form/form';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { PropertyList } from './components/foods/property/property-list.component';
-import { Ingredient } from './components/foods/ingredient/ingredient';
 import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
+import { FoodList } from './components/foods/food-list/food-list';
+import { FoodDetail } from './components/foods/food-list/food-detail/food-detail';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,11 @@ export const routes: Routes = [
     path: 'property/:id',
     component: PropertyDetail,
     title: 'Property details',
+  },
+  {
+    path: 'food/:id',
+    component: FoodDetail,
+    title: 'Food details',
   },
   {
     path: 'persons',
@@ -35,8 +41,8 @@ export const routes: Routes = [
     title: 'Add a person',
   },
   {
-    path: 'add-food',
-    component: Ingredient,
+    path: 'foods',
+    component: FoodList,
     title: 'Add a food',
   },
   {

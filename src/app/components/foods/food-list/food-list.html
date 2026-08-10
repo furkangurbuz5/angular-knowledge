@@ -1,1 +1,55 @@
-<p>food-list works!</p>
+<div class="food-container">
+  <h2>Add a Food</h2>
+
+  @if (foods().length > 0) {
+    <div class="food-list">
+      @for (food of foods(); track food.id) {
+        <div class="food-item">
+          <a [routerLink]="['/food', food.id]" class="food-link">
+            {{ food.name }}
+          </a>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="no-foods">No foods added yet.</p>
+  }
+
+  <form class="food-form" (ngSubmit)="addFood()">
+    <div class="form-field">
+      <label for="add_food">Food</label>
+      <input
+        id="add_food"
+        type="text"
+        [(ngModel)]="food"
+        name="food"
+        placeholder="Enter food name"/>
+    </div>
+
+    <div class="form-field">
+      <label for="add_food_serving_size">Serving size</label>
+      <input
+        id="add_food_serving_size"
+        type="text"
+        [(ngModel)]="servingSize"
+        name="servingSize"
+        placeholder="E.g. 250"/>
+    </div>
+
+    <div class="form-field">
+      <label for="add_food_unit">Unit</label>
+      <select
+        id="add_food_unit"
+        [(ngModel)]="unit"
+        name="unit">
+        <option value="g">g</option>
+        <option value="ml">ml</option>
+        <option value="amount">amount</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="button primary">Add Food</button>
+    </div>
+  </form>
+</div>

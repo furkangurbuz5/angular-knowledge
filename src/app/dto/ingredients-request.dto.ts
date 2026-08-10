@@ -1,5 +1,5 @@
 export interface CreateIngredientRequest {
   name: string;
-  servingSize: number;
-  unitId: number;
+  serving_size: number;
+  unit_id: number;
 }

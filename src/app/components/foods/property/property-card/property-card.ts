@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { Property } from '../../../../model/properties.model';
-import { mapUnitIdToOption } from '../../../../dto/properties-request.dto';
+import { mapUnitIdToOption} from '../../../../util/unit-mapper';
 
 @Component({
   selector: 'app-property-card',

@@ -1,32 +1,45 @@
-<h2>Add a property</h2>
+<div class="property-container">
+  <h2>Add a Property</h2>
 
-@for (property of properties(); track property.id) {
+  @if (properties().length > 0) {
+    <div class="property-list">
+      @for (property of properties(); track property.id) {
+        <div class="property-item">
+          <a [routerLink]="['/property', property.id]" class="property-link">
+            {{ property.name }}
+          </a>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="no-properties">No properties added yet.</p>
+  }
 
-  <p>
-    <a
-      [routerLink]="['/property', property.id]">
-      {{ property.name }}
-    </a>
-  </p>
-}
+  <form class="property-form" (ngSubmit)="addProperty()">
+    <div class="form-field">
+      <label for="add_property">Property</label>
+      <input
+        id="add_property"
+        type="text"
+        [(ngModel)]="property"
+        name="property"
+        placeholder="Enter property name">
+    </div>
 
-<label for="add_property">Property</label>
-<input
-  id="add_property"
-  type="text"
-  [(ngModel)]="property"
-/>
+    <div class="form-field">
+      <label for="add_property_unit">Unit</label>
+      <select
+        id="add_property_unit"
+        [(ngModel)]="unit"
+        name="unit">
+        <option value="g">g</option>
+        <option value="ml">ml</option>
+        <option value="amount">amount</option>
+      </select>
+    </div>
 
-<label for="add_property_unit">Unit(g/ml)</label>
-<select
-  id="add_property_unit"
-  type="text"
-  [(ngModel)]="unit"
->
-  <option>g</option>
-  <option>ml</option>
-  <option>amount</option>
-</select>
-
-
-<button (click)="addProperty()">Add</button>
+    <div class="form-actions">
+      <button type="submit" class="button primary">Add Property</button>
+    </div>
+  </form>
+</div>

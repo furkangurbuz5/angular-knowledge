@@ -1,10 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { PropertyService } from '../../../service/property-service';
-import { switchMap, take, tap } from 'rxjs';
+import { finalize, switchMap, take, tap } from 'rxjs';
 import { Property } from '../../../model/properties.model';
 import { FormsModule } from '@angular/forms';
-import { mapOptionToUnitId, UnitOption } from '../../../dto/properties-request.dto';
 import { RouterLink } from '@angular/router';
+import { mapOptionToUnitId, UnitOption } from '../../../util/unit-mapper';
 
 @Component({
   selector: 'app-property',
@@ -23,7 +23,7 @@ export class PropertyList {
   }
 
   protected addProperty() {
-    if (this.property.length === 0 && this.unit.length === 0) {
+    if (!this.property || !this.unit) {
       return;
     }
     const unitId: number = mapOptionToUnitId(this.unit.toLowerCase() as UnitOption);
@@ -38,6 +38,10 @@ export class PropertyList {
         switchMap(() => {
           return this.updateProperties();
         }),
+        finalize(() => {
+          this.property = '';
+          this.unit = '';
+        })
       )
       .subscribe();
   }
