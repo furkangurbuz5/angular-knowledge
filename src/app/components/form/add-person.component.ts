@@ -8,10 +8,10 @@ import { CreatePersonRequest } from '../../dto/person-request.dto';
 @Component({
   selector: 'app-form',
   imports: [ReactiveFormsModule],
-  templateUrl: './form.html',
-  styleUrl: './form.css',
+  templateUrl: './add-person.component.html',
+  styleUrl: './add-person.component.css',
 })
-export class Form implements OnInit {
+export class AddPerson implements OnInit {
   person = input<Person | null>(null);
   isSubmitting = signal(false);
   save = output<Person>();
@@ -58,12 +58,12 @@ export class Form implements OnInit {
       const formControls = this.form.controls;
       //TODO DTO?
       const personData: CreatePersonRequest = {
-        firstName: formControls.firstName.value,
-        lastName: formControls.lastName.value,
+        first_name: formControls.firstName.value,
+        last_name: formControls.lastName.value,
         email: formControls.email.value,
         car: formControls.car.value,
         city: formControls.city.value,
-        countryOfOrigin: formControls.countryOfOrigin.value,
+        country_of_origin: formControls.countryOfOrigin.value,
         bank: formControls.bank.value,
       };
       this.personService.addPerson(personData).subscribe((data) => {

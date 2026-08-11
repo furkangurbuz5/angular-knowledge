@@ -1,0 +1,19 @@
+.food-detail-container {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 24px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-message {
+  color: #f44336;
+  text-align: center;
+  padding: 24px;
+  font-size: 1.2rem;
+}

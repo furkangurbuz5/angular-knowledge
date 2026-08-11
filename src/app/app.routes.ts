@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Detail } from './components/list/detail/detail';
 import { List } from './components/list/list';
 import { Dashboard } from './components/dashboard/dashboard';
-import { Form } from './components/form/form';
+import { AddPerson } from './components/form/add-person.component';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { PropertyList } from './components/foods/property/property-list.component';
 import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
@@ -10,6 +10,11 @@ import { FoodList } from './components/foods/food-list/food-list';
 import { FoodDetail } from './components/foods/food-list/food-detail/food-detail';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: Dashboard,
+    title: 'Dashboard',
+  },
   {
     path: 'person/:id',
     component: Detail,
@@ -36,8 +41,8 @@ export const routes: Routes = [
     title: 'Dashboard',
   },
   {
-    path: 'add',
-    component: Form,
+    path: 'add-person',
+    component: AddPerson,
     title: 'Add a person',
   },
   {

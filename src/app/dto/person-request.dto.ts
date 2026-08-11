@@ -1,19 +1,19 @@
 export interface CreatePersonRequest {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   car: string;
   city: string;
-  countryOfOrigin: string;
+  country_of_origin: string;
   bank: string;
 }
 
 export interface UpdatePersonRequest {
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
   car?: string;
   city?: string;
-  countryOfOrigin?: string;
+  country_of_origin?: string;
   bank?: string;
 }
