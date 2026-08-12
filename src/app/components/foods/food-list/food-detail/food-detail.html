@@ -16,12 +16,12 @@
 
     <h2>Properties</h2>
     <div class="food-property-card-container">
-    @for (foodProperty of foodProperties(); track foodProperty.id) {
-      <app-food-property-card [property]="foodProperty"></app-food-property-card>
-    }
+      @for (foodProperty of foodProperties(); track foodProperty.id) {
+        <app-food-property-card [property]="foodProperty"></app-food-property-card>
+      }
     </div>
 
-  <h3>Add a property</h3>
+    <h3>Add a property</h3>
 
     <form class="add-property-form" (ngSubmit)="addPropertyToFood()">
       <div class="add-property-form-field">
@@ -31,7 +31,7 @@
           name="property"
           [(ngModel)]="propertyId"
         >
-          @for(property of properties(); track $index){
+          @for (property of properties(); track $index) {
             <option [value]="property.id">{{ property.name }}</option>
           }
         </select>
@@ -41,10 +41,10 @@
         <label for="add_property_value">Value</label>
         <input
           id="add_property_value"
-          type="text"
+          type="number"
           [(ngModel)]="propertyValue"
           name="propertyValue"
-          placeholder="E.g. 250"/>
+          placeholder="E.g. 250" />
       </div>
 
       <div class="form-actions">

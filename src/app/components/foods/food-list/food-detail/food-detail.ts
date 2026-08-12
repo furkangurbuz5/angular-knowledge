@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize, forkJoin, take } from 'rxjs';
+import { catchError, finalize, forkJoin, take, throwError } from 'rxjs';
 import { Ingredient } from '../../../../model/ingredient.model';
 import { FoodService } from '../../../../service/food-service';
 import { Action } from '../../../shared/action/action';
@@ -29,9 +29,8 @@ export class FoodDetail {
 
   propertyId: number = 0;
   propertyValue: number = 0;
-
-  private readonly route: ActivatedRoute = inject(ActivatedRoute);
   protected router: Router = inject(Router);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly foodService: FoodService = inject(FoodService);
   private readonly propertyService: PropertyService = inject(PropertyService);
 
@@ -70,11 +69,19 @@ export class FoodDetail {
       .addPropertyToFood(propertyToAdd)
       .pipe(
         take(1),
+        catchError(() => {
+          return throwError(() => new Error("Couldn't add property to the food."));
+        }),
         finalize(() => {
           this.updateProperties();
         }),
       )
-      .subscribe();
+      .subscribe({
+        error: (err: Error) => {
+          this.hasError.set(true);
+          this.errorMessage.set(err.message);
+        }
+      });
   }
 
   private loadFoodAndProperties() {
