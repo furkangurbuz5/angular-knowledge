@@ -1,4 +1,4 @@
-export const UnitOptions = ['g', 'ml', 'amount', 'kcal'] as const;
+export const UnitOptions = ['g', 'ml', 'amount', 'kcal', 'mg'] as const;
 export type UnitOption = (typeof UnitOptions)[number];
 
 const unitIdByOption: Record<UnitOption, number> = {
@@ -6,6 +6,7 @@ const unitIdByOption: Record<UnitOption, number> = {
   g: 2,
   amount: 3,
   kcal: 4,
+  mg: 5,
 };
 
 const optionByUnitId: Record<number, UnitOption> = {
@@ -13,6 +14,7 @@ const optionByUnitId: Record<number, UnitOption> = {
   2: 'g',
   3: 'amount',
   4: 'kcal',
+  5: 'mg',
 };
 
 export function mapOptionToUnitId(option: UnitOption): number {
