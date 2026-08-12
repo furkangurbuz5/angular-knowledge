@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { Property } from '../../../../model/properties.model';
-import { mapUnitIdToOption} from '../../../../util/unit-mapper';
 
 @Component({
   selector: 'app-property-card',
@@ -10,5 +9,4 @@ import { mapUnitIdToOption} from '../../../../util/unit-mapper';
 })
 export class PropertyCard {
   property = input.required<Property>();
-  protected readonly mapUnitIdToOption = mapUnitIdToOption;
 }
