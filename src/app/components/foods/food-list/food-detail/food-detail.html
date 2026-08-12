@@ -14,9 +14,14 @@
       (onDelete)="onDelete($event!)"
     ></app-action>
 
-<!--    @for(foodProperty of foodProperties(); track foodProperty.id){-->
+    <h2>Properties</h2>
+    <div class="food-property-card-container">
+    @for (foodProperty of foodProperties(); track foodProperty.id) {
+      <app-food-property-card [property]="foodProperty"></app-food-property-card>
+    }
+    </div>
 
-<!--    }-->
+
 
 
   </div>

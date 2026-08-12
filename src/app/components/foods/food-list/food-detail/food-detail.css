@@ -17,3 +17,9 @@
   padding: 24px;
   font-size: 1.2rem;
 }
+
+.food-property-card-container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

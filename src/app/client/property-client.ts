@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Property } from '../model/properties.model';
-import { PropertyResponse } from '../dto/properties-response.dto';
+import { PropertyResponse, PropertyWithValueResponse } from '../dto/properties-response.dto';
 import { CreatePropertyRequest } from '../dto/properties-request.dto';
 
 @Injectable({
@@ -16,6 +15,12 @@ export class PropertyClient {
 
   getPropertyById(id:number){
     return this.httpClient.get<PropertyResponse>(`http://localhost:8080/api/v1/properties/${id}`);
+  }
+
+  getPropertyWithValueByIngredientId(ingredientId: number){
+    return this.httpClient.get<PropertyWithValueResponse[]>(
+      `http://localhost:8080/api/v1/properties/ingredients/${ingredientId}`,
+    );
   }
 
   addProperty(property: CreatePropertyRequest){

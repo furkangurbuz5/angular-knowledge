@@ -1,0 +1,42 @@
+.food-property-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 200px;
+}
+
+.food-property-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.food-property-header {
+  margin-bottom: 8px;
+}
+
+.food-property-name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.food-property-details {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.food-property-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.food-property-unit {
+  font-size: 0.9rem;
+  color: #666;
+}

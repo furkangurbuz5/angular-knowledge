@@ -5,5 +5,8 @@ export interface Property {
 }
 
 export interface PropertyWithValue {
-
+  id: number;
+  name: string;
+  unit: string;
+  value: number;
 }
