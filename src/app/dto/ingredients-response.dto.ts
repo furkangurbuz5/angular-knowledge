@@ -4,7 +4,7 @@ export interface IngredientResponse {
   id: number;
   name: string;
   servingSize: number;
-  unitId: number;
+  unit: string;
 }
 
 export function mapIngredientResponseToIngredient(
@@ -14,6 +14,6 @@ export function mapIngredientResponseToIngredient(
     id: ingredientResponse.id,
     name: ingredientResponse.name,
     servingSize: ingredientResponse.servingSize,
-    unitId: ingredientResponse.unitId,
+    unit: ingredientResponse.unit,
   };
 }

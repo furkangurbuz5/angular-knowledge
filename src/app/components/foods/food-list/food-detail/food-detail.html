@@ -7,12 +7,17 @@
     <app-food-card
       [food]="food()!"
     >
-
     </app-food-card>
     <app-action
       [item]="food()"
       (onBack)="onBack()"
       (onDelete)="onDelete($event!)"
     ></app-action>
+
+<!--    @for(foodProperty of foodProperties(); track foodProperty.id){-->
+
+<!--    }-->
+
+
   </div>
 }

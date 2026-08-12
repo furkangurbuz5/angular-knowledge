@@ -4,12 +4,11 @@ import { finalize, take } from 'rxjs';
 import { Ingredient } from '../../../../model/ingredient.model';
 import { FoodService } from '../../../../service/food-service';
 import { Action } from '../../../shared/action/action';
-import { PropertyCard } from '../../property/property-card/property-card';
 import { FoodCard } from '../food-card/food-card';
 
 @Component({
   selector: 'app-food-detail',
-  imports: [Action, PropertyCard, FoodCard],
+  imports: [Action, FoodCard],
   templateUrl: './food-detail.html',
   styleUrl: './food-detail.css',
 })
@@ -19,6 +18,7 @@ export class FoodDetail {
   hasError = signal(false);
   errorMessage = signal<string>('');
   deleted = signal<boolean>(false);
+  // foodProperties = signal<Property[]>([])
 
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);

@@ -3,3 +3,7 @@ export interface Property {
   name: string;
   unit: string;
 }
+
+export interface PropertyWithValue {
+
+}
