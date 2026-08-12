@@ -31,7 +31,7 @@
           name="property"
           [(ngModel)]="propertyId"
         >
-          @for(property of properties(); track property.id){
+          @for(property of properties(); track $index){
             <option [value]="property.id">{{ property.name }}</option>
           }
         </select>
