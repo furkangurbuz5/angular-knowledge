@@ -31,37 +31,14 @@ export class FoodDetail {
   propertyValue: number = 0;
 
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
-  private router: Router = inject(Router);
+  protected router: Router = inject(Router);
   private readonly foodService: FoodService = inject(FoodService);
   private readonly propertyService: PropertyService = inject(PropertyService);
 
   ngOnInit() {
     this.ingredientId.set(+this.route.snapshot.paramMap.get('id')!);
     if (this.ingredientId()) {
-      forkJoin({
-        food: this.foodService.getFoodById(this.ingredientId()),
-        foodProperties: this.propertyService.getPropertyWithValueByIngredientId(
-          this.ingredientId(),
-        ),
-        properties: this.propertyService.getAllProperties(),
-      })
-        .pipe(
-          take(1),
-          finalize(() => {
-            this.isLoading.set(false);
-          }),
-        )
-        .subscribe({
-          next: ({ food, foodProperties, properties }) => {
-            this.food.set(food);
-            this.foodProperties.set(foodProperties);
-            this.properties.set(properties);
-          },
-          error: () => {
-            this.hasError.set(true);
-            this.errorMessage.set('Failed to load food details.');
-          },
-        });
+      this.loadFoodAndProperties();
     }
   }
 
@@ -89,6 +66,48 @@ export class FoodDetail {
       value: this.propertyValue,
     };
 
-    this.foodService.addPropertyToFood(propertyToAdd).pipe(take(1)).subscribe();
+    this.foodService
+      .addPropertyToFood(propertyToAdd)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.updateProperties();
+        }),
+      )
+      .subscribe();
+  }
+
+  private loadFoodAndProperties() {
+    forkJoin({
+      food: this.foodService.getFoodById(this.ingredientId()),
+      foodProperties: this.propertyService.getPropertyWithValueByIngredientId(this.ingredientId()),
+      properties: this.propertyService.getAllProperties(),
+    })
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe({
+        next: ({ food, foodProperties, properties }) => {
+          this.food.set(food);
+          this.foodProperties.set(foodProperties);
+          this.properties.set(properties);
+        },
+        error: () => {
+          this.hasError.set(true);
+          this.errorMessage.set('Failed to load food details.');
+        },
+      });
+  }
+
+  private updateProperties() {
+    this.propertyService
+      .getPropertyWithValueByIngredientId(this.ingredientId())
+      .pipe(take(1))
+      .subscribe((properties) => {
+        this.foodProperties.set(properties);
+      });
   }
 }
