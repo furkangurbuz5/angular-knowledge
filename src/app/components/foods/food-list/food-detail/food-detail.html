@@ -21,8 +21,35 @@
     }
     </div>
 
+  <h3>Add a property</h3>
 
+    <form class="add-property-form" (ngSubmit)="addPropertyToFood()">
+      <div class="add-property-form-field">
+        <label for="add_property">Property</label>
+        <select
+          id="add_property"
+          name="property"
+          [(ngModel)]="propertyId"
+        >
+          @for(property of properties(); track property.id){
+            <option [value]="property.id">{{ property.name }}</option>
+          }
+        </select>
+      </div>
 
+      <div class="add-property-form-field">
+        <label for="add_property_value">Value</label>
+        <input
+          id="add_property_value"
+          type="text"
+          [(ngModel)]="propertyValue"
+          name="propertyValue"
+          placeholder="E.g. 250"/>
+      </div>
 
+      <div class="form-actions">
+        <button type="submit" class="button primary">Add Property</button>
+      </div>
+    </form>
   </div>
 }

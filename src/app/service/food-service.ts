@@ -1,9 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { FoodClient } from '../client/food-client';
-import { CreateIngredientRequest } from '../dto/ingredients-request.dto';
-import { mapIngredientResponseToIngredient } from '../dto/ingredients-response.dto';
-import { Ingredient } from '../model/ingredient.model';
+import {
+  AddPropertyToIngredientRequest,
+  CreateIngredientRequest,
+} from '../dto/ingredients-request.dto';
+import {
+  mapIngredientPropertiesResponseToIngredientProperties,
+  mapIngredientResponseToIngredient,
+} from '../dto/ingredients-response.dto';
+import { Ingredient, IngredientProperties } from '../model/ingredient.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +29,14 @@ export class FoodService {
     return this.foodClient.addFood(food).pipe(
       map((ingredientResponse): Ingredient => {
         return mapIngredientResponseToIngredient(ingredientResponse);
+      }),
+    );
+  }
+
+  addPropertyToFood(property: AddPropertyToIngredientRequest) {
+    return this.foodClient.addPropertyToFood(property).pipe(
+      map((ingredientResponse): IngredientProperties => {
+        return mapIngredientPropertiesResponseToIngredientProperties(ingredientResponse);
       }),
     );
   }

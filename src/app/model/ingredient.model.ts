@@ -4,3 +4,10 @@ export interface Ingredient {
   servingSize: number;
   unit: string;
 }
+
+export interface IngredientProperties {
+  id: number;
+  ingredientId: number;
+  propertyId: number;
+  value: number;
+}

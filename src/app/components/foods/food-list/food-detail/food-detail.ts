@@ -5,23 +5,30 @@ import { Ingredient } from '../../../../model/ingredient.model';
 import { FoodService } from '../../../../service/food-service';
 import { Action } from '../../../shared/action/action';
 import { FoodCard } from '../food-card/food-card';
-import { PropertyWithValue } from '../../../../model/properties.model';
+import { Property, PropertyWithValue } from '../../../../model/properties.model';
 import { PropertyService } from '../../../../service/property-service';
 import { FoodPropertyCard } from '../food-property-card/food-property-card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddPropertyToIngredientRequest } from '../../../../dto/ingredients-request.dto';
 
 @Component({
   selector: 'app-food-detail',
-  imports: [Action, FoodCard, FoodPropertyCard],
+  imports: [Action, FoodCard, FoodPropertyCard, FormsModule, ReactiveFormsModule],
   templateUrl: './food-detail.html',
   styleUrl: './food-detail.css',
 })
 export class FoodDetail {
+  ingredientId = signal(0);
   food = signal<Ingredient | null>(null);
   isLoading = signal(true);
   hasError = signal(false);
   errorMessage = signal<string>('');
   deleted = signal<boolean>(false);
   foodProperties = signal<PropertyWithValue[]>([]);
+  properties = signal<Property[]>([]);
+
+  propertyId: number = 0;
+  propertyValue: number = 0;
 
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
@@ -29,11 +36,14 @@ export class FoodDetail {
   private readonly propertyService: PropertyService = inject(PropertyService);
 
   ngOnInit() {
-    const id: string | null = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    this.ingredientId.set(+this.route.snapshot.paramMap.get('id')!);
+    if (this.ingredientId()) {
       forkJoin({
-        food: this.foodService.getFoodById(+id),
-        properties: this.propertyService.getPropertyWithValueByIngredientId(+id),
+        food: this.foodService.getFoodById(this.ingredientId()),
+        foodProperties: this.propertyService.getPropertyWithValueByIngredientId(
+          this.ingredientId(),
+        ),
+        properties: this.propertyService.getAllProperties(),
       })
         .pipe(
           take(1),
@@ -42,9 +52,10 @@ export class FoodDetail {
           }),
         )
         .subscribe({
-          next: ({ food, properties }) => {
+          next: ({ food, foodProperties, properties }) => {
             this.food.set(food);
-            this.foodProperties.set(properties);
+            this.foodProperties.set(foodProperties);
+            this.properties.set(properties);
           },
           error: () => {
             this.hasError.set(true);
@@ -54,11 +65,11 @@ export class FoodDetail {
     }
   }
 
-  onBack(): void {
+  protected onBack(): void {
     this.router.navigate(['/foods']).then(() => console.log('navigating to /foods'));
   }
 
-  onDelete(food: Ingredient): void {
+  protected onDelete(food: Ingredient): void {
     this.foodService
       .deleteFoodById(food.id)
       .pipe(
@@ -69,5 +80,15 @@ export class FoodDetail {
         }),
       )
       .subscribe();
+  }
+
+  protected addPropertyToFood() {
+    const propertyToAdd: AddPropertyToIngredientRequest = {
+      ingredient_id: this.ingredientId(),
+      property_id: this.propertyId,
+      value: this.propertyValue,
+    };
+
+    this.foodService.addPropertyToFood(propertyToAdd).pipe(take(1)).subscribe();
   }
 }
