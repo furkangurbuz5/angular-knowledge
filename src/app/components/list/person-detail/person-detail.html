@@ -12,6 +12,8 @@
       (onDelete)="onDelete($event)"
     />
 
-    <app-person-food-detail>s</app-person-food-detail>
+    <app-person-food-detail
+      [foods]="foods()"
+    ></app-person-food-detail>
   </div>
 }

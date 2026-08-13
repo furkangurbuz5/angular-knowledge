@@ -1,1 +1,8 @@
-<p>person-food-detail works!</p>
+<h3>Vandaag</h3>
+<div>
+  @for (food of foods(); track $index) {
+    <app-food-card
+      [food]="food.ingredient">
+    </app-food-card>
+  }
+</div>

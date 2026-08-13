@@ -13,5 +13,5 @@ export interface Person {
 
 export interface PersonWithIngredients{
   person: Person,
-  ingredientWithProperties: IngredientWithProperties[],
+  ingredientsWithProperties: IngredientWithProperties[],
 }

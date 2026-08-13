@@ -39,8 +39,9 @@ export class PersonDetail {
         )
         .subscribe({
           next: (personWithIngredients) => {
+            console.log(personWithIngredients);
             this.person.set(personWithIngredients.person);
-            this.foods.set(personWithIngredients.ingredientWithProperties);
+            this.foods.set(personWithIngredients.ingredientsWithProperties);
           },
           error: () => {
             this.hasError.set(true);
@@ -60,6 +61,7 @@ export class PersonDetail {
         take(1),
         finalize(() => {
           this.deleted.set(true);
+          this.onBack();
         }),
       )
       .subscribe({});
