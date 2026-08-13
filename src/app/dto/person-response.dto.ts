@@ -7,7 +7,7 @@ export interface PersonResponse {
   email: string,
   car: string,
   city: string,
-  country_of_origin: string,
+  countryOfOrigin: string,
   bank: string
 }
 
@@ -16,7 +16,7 @@ export function mapResponseToPerson(personResponse: PersonResponse): Person {
     bank: personResponse.bank,
     car: personResponse.car,
     city: personResponse.city,
-    countryOfOrigin: personResponse.country_of_origin,
+    countryOfOrigin: personResponse.countryOfOrigin,
     email: personResponse.email,
     firstName: personResponse.first_name,
     id: personResponse.id,
