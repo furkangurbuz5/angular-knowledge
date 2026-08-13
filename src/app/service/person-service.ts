@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { PersonClient } from '../client/person-client';
 import { map, Observable, take } from 'rxjs';
-import { Person } from '../model/person.model';
+import { Person, PersonWithIngredients } from '../model/person.model';
 import { mapResponseToPerson, PersonResponse } from '../dto/person-response.dto';
 import { CreatePersonRequest } from '../dto/person-request.dto';
 
@@ -35,6 +35,10 @@ export class PersonService {
         return personResponse.map(mapResponseToPerson);
       }),
     );
+  }
+
+  getPersonWithIngredientsById(id: string): Observable<PersonWithIngredients> {
+    return this.personClient.getPersonWithIngredientsById(id)
   }
 
   addPerson(person: CreatePersonRequest) {

@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyToIngredientRequest } from '../../../../dto/ingredients-request.dto';
 
 @Component({
-  selector: 'app-food-detail',
+  selector: 'app-food-person-detail',
   imports: [Action, FoodCard, FoodPropertyCard, FormsModule, ReactiveFormsModule],
   templateUrl: './food-detail.html',
   styleUrl: './food-detail.css',

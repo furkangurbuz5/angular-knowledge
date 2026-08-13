@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { PersonResponse } from '../dto/person-response.dto';
 import { Observable } from 'rxjs';
 import { CreatePersonRequest } from '../dto/person-request.dto';
+import { PersonWithIngredients } from '../model/person.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,12 @@ export class PersonClient {
     return this.httpClient.get<PersonResponse[]>(`http://localhost:8080/api/v1/persons`, {
       params,
     });
+  }
+
+  getPersonWithIngredientsById(id: string){
+    return this.httpClient.get<PersonWithIngredients>(
+      `http://localhost:8080/api/v1/persons/${id}/ingredients`,
+    );
   }
 
   addPerson(person: CreatePersonRequest): Observable<PersonResponse> {

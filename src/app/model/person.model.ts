@@ -1,3 +1,5 @@
+import { IngredientWithProperties } from './ingredient.model';
+
 export interface Person {
   id: number;
   firstName: string;
@@ -7,4 +9,9 @@ export interface Person {
   city: string;
   countryOfOrigin: string;
   bank: string;
+}
+
+export interface PersonWithIngredients{
+  person: Person,
+  ingredientWithProperties: IngredientWithProperties[],
 }

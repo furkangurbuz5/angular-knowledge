@@ -5,15 +5,18 @@ import { PersonService } from '../../../service/person-service';
 import { Card } from './card/card';
 import { Action } from '../../shared/action/action';
 import { finalize, take } from 'rxjs';
+import { IngredientWithProperties } from '../../../model/ingredient.model';
+import { PersonFoodDetail } from './person-food-detail/person-food-detail';
 
 @Component({
-  selector: 'app-detail',
-  imports: [Card, Action],
-  templateUrl: './detail.html',
-  styleUrl: './detail.css',
+  selector: 'app-person-detail',
+  imports: [Card, Action, PersonFoodDetail],
+  templateUrl: './person-detail.html',
+  styleUrl: './person-detail.css',
 })
-export class Detail {
+export class PersonDetail {
   person = signal<Person | null>(null);
+  foods = signal<IngredientWithProperties[]>([]);
   isLoading = signal(true);
   hasError = signal(false);
   errorMessage = signal<string>('');
@@ -27,7 +30,7 @@ export class Detail {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.personService
-        .getPersonById(id)
+        .getPersonWithIngredientsById(id)
         .pipe(
           take(1),
           finalize(() => {
@@ -35,8 +38,9 @@ export class Detail {
           }),
         )
         .subscribe({
-          next: (person) => {
-            this.person.set(person);
+          next: (personWithIngredients) => {
+            this.person.set(personWithIngredients.person);
+            this.foods.set(personWithIngredients.ingredientWithProperties);
           },
           error: () => {
             this.hasError.set(true);

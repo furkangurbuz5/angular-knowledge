@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Detail } from './components/list/detail/detail';
+import { PersonDetail } from './components/list/person-detail/person-detail';
 import { List } from './components/list/list';
 import { Dashboard } from './components/dashboard/dashboard';
 import { AddPerson } from './components/form/add-person.component';
@@ -17,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'person/:id',
-    component: Detail,
+    component: PersonDetail,
     title: 'Person details',
   },
   {

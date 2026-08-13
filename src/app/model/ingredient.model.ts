@@ -1,3 +1,5 @@
+import { PropertyWithValue } from './properties.model';
+
 export interface Ingredient {
   id: number;
   name: string;
@@ -10,4 +12,9 @@ export interface IngredientProperties {
   ingredientId: number;
   propertyId: number;
   value: number;
+}
+
+export interface IngredientWithProperties {
+  ingredient: Ingredient;
+  properties: PropertyWithValue[];
 }

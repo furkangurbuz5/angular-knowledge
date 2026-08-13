@@ -7,7 +7,7 @@ import { Action } from '../../../shared/action/action';
 import { PropertyCard } from '../property-card/property-card';
 
 @Component({
-  selector: 'app-property-detail',
+  selector: 'app-property-person-detail',
   imports: [Action, PropertyCard],
   templateUrl: './property-detail.html',
   styleUrl: './property-detail.css',

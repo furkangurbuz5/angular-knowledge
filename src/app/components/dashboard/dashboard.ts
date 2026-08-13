@@ -4,6 +4,9 @@ import { Person } from '../../model/person.model';
 import { calculatePersonStats, PersonStats, StatItem } from '../../model/person-stats.model';
 import { StatsCard } from './stats-card/stats-card';
 import { DistributionChart } from './distribution-chart/distribution-chart';
+import { calculateFoodStats, FoodStats } from '../../model/food-stats.model';
+import { forkJoin } from 'rxjs';
+import { FoodService } from '../../service/food-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,20 +18,30 @@ export class Dashboard implements OnInit {
   persons = signal<Person[]>([]);
   isLoading = signal(true);
   error = signal<string | null>(null);
-  stats = signal<PersonStats>({
+  personStats = signal<PersonStats>({
     totalPersons: 0,
     carStats: [],
     countryStats: [],
     bankStats: [],
     cityStats: [],
   });
+  foodStats = signal<FoodStats>({
+    totalFoods: 0,
+    propertyStats: [],
+    foodStats: [],
+  });
   private personService = inject(PersonService);
+  private foodService = inject(FoodService);
 
   ngOnInit(): void {
-    this.personService.getAllPersons().subscribe({
-      next: (persons) => {
+    forkJoin({
+      persons: this.personService.getAllPersons(),
+      foods: this.foodService.getAllFoods(),
+    }).subscribe({
+      next: ({ persons, foods }) => {
         this.persons.set(persons);
-        this.stats.set(calculatePersonStats(persons));
+        this.personStats.set(calculatePersonStats(persons));
+        this.foodStats.set(calculateFoodStats(foods));
         this.isLoading.set(false);
       },
       error: (err) => {
