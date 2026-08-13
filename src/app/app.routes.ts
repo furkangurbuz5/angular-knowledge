@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { PersonDetail } from './components/list/person-detail/person-detail';
-import { List } from './components/list/list';
+import { PersonDetail } from './components/person-list/person-detail/person-detail';
+import { PersonList } from './components/person-list/person-list';
 import { Dashboard } from './components/dashboard/dashboard';
 import { AddPerson } from './components/form/add-person.component';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
@@ -32,7 +32,7 @@ export const routes: Routes = [
   },
   {
     path: 'persons',
-    component: List,
+    component: PersonList,
     title: 'People',
   },
   {

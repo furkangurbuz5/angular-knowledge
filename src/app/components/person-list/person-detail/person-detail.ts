@@ -51,10 +51,10 @@ export class PersonDetail {
     }
   }
 
-  onBack(): void {
+  protected onBack(): void {
     this.router.navigate(['/persons']).then(() => console.log('navigating to /persons'));
   }
-  onDelete(person: Person) {
+  protected onDelete(person: Person) {
     this.personService
       .deletePersonById(person.id)
       .pipe(

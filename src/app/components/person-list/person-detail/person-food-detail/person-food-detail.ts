@@ -1,11 +1,10 @@
 import { Component, input } from '@angular/core';
 import { IngredientWithProperties } from '../../../../model/ingredient.model';
 import { FoodCard } from '../../../foods/food-list/food-card/food-card';
-import { Action } from '../../../shared/action/action';
 
 @Component({
   selector: 'app-person-food-detail',
-  imports: [FoodCard, Action],
+  imports: [FoodCard],
   templateUrl: './person-food-detail.html',
   styleUrl: './person-food-detail.css',
 })

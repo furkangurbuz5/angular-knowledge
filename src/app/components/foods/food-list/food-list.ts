@@ -8,7 +8,7 @@ import { mapOptionToUnitId, UnitOption } from '../../../util/unit-mapper';
 import { CreateIngredientRequest } from '../../../dto/ingredients-request.dto';
 
 @Component({
-  selector: 'app-food-list',
+  selector: 'app-food-person-list',
   imports: [FormsModule, RouterLink],
   templateUrl: './food-list.html',
   styleUrl: './food-list.css',

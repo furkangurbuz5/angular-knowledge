@@ -14,13 +14,13 @@ import { combineLatest, debounceTime, finalize, map, Subject, take, takeUntil, t
 import { Search } from './search/search';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-person-list',
   imports: [Table, Search],
-  templateUrl: './list.html',
-  styleUrl: './list.css',
+  templateUrl: './person-list.html',
+  styleUrl: './person-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class List implements OnInit, OnDestroy {
+export class PersonList implements OnInit, OnDestroy {
   protected readonly persons: WritableSignal<Person[]> = signal<Person[]>([]);
   protected readonly filteredPersons: WritableSignal<Person[]> = signal<Person[]>(this.persons());
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
