@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FoodService } from '../../../service/food-service';
 import { Ingredient } from '../../../model/ingredient.model';
-import { finalize, switchMap, take, tap } from 'rxjs';
+import { finalize, take, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { mapOptionToUnitId, UnitOption } from '../../../util/unit-mapper';
@@ -21,7 +21,7 @@ export class FoodList {
   private readonly foodService = inject(FoodService);
 
   ngOnInit() {
-    this.updateFoods().subscribe();
+    this.fetchFoods();
   }
 
   protected addFood() {
@@ -39,8 +39,8 @@ export class FoodList {
       .addFood(foodToAdd)
       .pipe(
         take(1),
-        switchMap(() => this.updateFoods()),
         finalize(() => {
+          this.fetchFoods();
           this.food = '';
           this.servingSize = null;
           this.unit = '';
@@ -49,12 +49,15 @@ export class FoodList {
       .subscribe();
   }
 
-  private updateFoods() {
-    return this.foodService.getAllFoods().pipe(
-      take(1),
-      tap((foods) => {
-        this.foods.set(foods);
-      }),
-    );
+  private fetchFoods() {
+    this.foodService
+      .getAllFoods()
+      .pipe(
+        take(1),
+        tap((foods) => {
+          this.foods.set(foods);
+        }),
+      )
+      .subscribe();
   }
 }

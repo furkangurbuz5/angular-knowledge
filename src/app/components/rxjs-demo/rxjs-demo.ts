@@ -69,7 +69,7 @@ export class RxjsDemo implements OnInit, OnDestroy {
     this.destroy$.complete();
 
     if (this.leakyIntervalId) {
-      // window.clearInterval(this.leakyIntervalId);
+      window.clearInterval(this.leakyIntervalId);
     }
   }
 

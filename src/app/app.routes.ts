@@ -8,6 +8,8 @@ import { PropertyList } from './components/foods/property/property-list.componen
 import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
 import { FoodList } from './components/foods/food-list/food-list';
 import { FoodDetail } from './components/foods/food-list/food-detail/food-detail';
+import { CollectionDetail } from './components/collections/collection-detail/collection-detail';
+import { Collections } from './components/collections/collections';
 
 export const routes: Routes = [
   {
@@ -29,6 +31,11 @@ export const routes: Routes = [
     path: 'food/:id',
     component: FoodDetail,
     title: 'Food details',
+  },
+  {
+    path: 'collection/:id',
+    component: CollectionDetail,
+    title: 'Collection details',
   },
   {
     path: 'persons',
@@ -54,6 +61,11 @@ export const routes: Routes = [
     path: 'properties',
     component: PropertyList,
     title: 'Add a property',
+  },
+  {
+    path: 'collections',
+    component: Collections,
+    title: 'Collections',
   },
   {
     path: 'rxjsdemo',
