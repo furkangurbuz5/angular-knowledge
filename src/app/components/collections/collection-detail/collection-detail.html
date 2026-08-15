@@ -1,1 +1,50 @@
-<p>collection-detail works!</p>
+@if (isLoading()) {
+  <div class="loading-spinner">Loading...</div>
+} @else if (hasError()) {
+  <div class="error-message">{{ errorMessage() }}</div>
+} @else if (collection()) {
+  <div class="collection-detail-container">
+    <app-action
+      [item]="collection()"
+      (onBack)="onBack()"
+      (onDelete)="onDelete($event)"
+    ></app-action>
+
+    <h2>Foods</h2>
+    <div class="collection-food-card-container">
+      @for (collectionFood of collectionFoods(); track collectionFood.id) {
+        <app-collection-food-card [food]="collectionFood"></app-collection-food-card>
+      }
+    </div>
+
+    <h3>Add a food</h3>
+
+    <form class="add-food-form" (ngSubmit)="addFoodToCollection()">
+      <div class="add-food-form-field">
+        <label for="add_food">Food</label>
+        <select
+          id="add_food"
+          name="food"
+          [(ngModel)]="foodId"
+        >
+          @for (food of foods(); track $index) {
+            <option [value]="food.id">{{ food.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="add-food-form-field">
+        <label for="add_quantity">Quantity</label>
+        <input
+          id="add_quantity"
+          type="number"
+          [(ngModel)]="quantity"
+          name="quantity"
+          placeholder="E.g. 250" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="button primary">Add Property</button>
+      </div>
+    </form>
+  </div>
+}
