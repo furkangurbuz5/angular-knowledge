@@ -18,7 +18,7 @@ import { CollectionFoodCard } from './collection-food-card/collection-food-card'
 })
 export class CollectionDetail {
   collectionId = signal(0);
-  collection = signal<Collection>({ id: 0, name: "" });
+  collection = signal<Collection>({ id: 0, name: '' });
   isLoading = signal(true);
   hasError = signal(false);
   errorMessage = signal<string>('');
@@ -59,7 +59,7 @@ export class CollectionDetail {
   }
 
   protected addFoodToCollection() {
-    if(!this.foodId || !this.quantity) {
+    if (!this.foodId || !this.quantity) {
       return;
     }
     const addFoodToCollectionRequest: AddFoodToCollectionRequest = {
@@ -88,8 +88,7 @@ export class CollectionDetail {
 
   private loadCollectionAndFoods() {
     forkJoin({
-      collection: this.collectionService.getCollectionById(this.collectionId()),
-      collectionFoods: this.collectionService.getFoodsByCollectionId(this.collectionId()),
+      collectionWithFoods: this.collectionService.getFoodsByCollectionId(this.collectionId()),
       foods: this.foodService.getAllFoods(),
     })
       .pipe(
@@ -99,9 +98,9 @@ export class CollectionDetail {
         }),
       )
       .subscribe({
-        next: ({ collection, collectionFoods, foods }) => {
-          this.collection.set(collection);
-          this.collectionFoods.set(collectionFoods);
+        next: ({ collectionWithFoods, foods }) => {
+          this.collection.set(collectionWithFoods.collection);
+          this.collectionFoods.set(collectionWithFoods.foods);
           this.foods.set(foods);
         },
         error: () => {
@@ -115,8 +114,8 @@ export class CollectionDetail {
     this.collectionService
       .getFoodsByCollectionId(this.collectionId())
       .pipe(take(1))
-      .subscribe((properties) => {
-        this.collectionFoods.set(properties);
+      .subscribe((collectionWithFoods) => {
+        this.collectionFoods.set(collectionWithFoods.foods);
       });
   }
 }

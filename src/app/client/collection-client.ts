@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CollectionResponse } from '../dto/collection-response.dto';
+import { CollectionResponse, CollectionWithFoodsResponse } from '../dto/collection-response.dto';
 import { AddFoodToCollectionRequest, CreateCollectionRequest } from '../dto/collection-request.dto';
 import { IngredientResponse } from '../dto/ingredients-response.dto';
 
@@ -28,7 +28,7 @@ export class CollectionClient {
   }
 
   getFoodsByCollectionId(id: number) {
-    return this.httpClient.get<IngredientResponse[]>(
+    return this.httpClient.get<CollectionWithFoodsResponse>(
       `http://localhost:8080/api/v1/collections/${id}/foods`,
     );
   }

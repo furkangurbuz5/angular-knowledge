@@ -1,3 +1,4 @@
+import { IngredientResponse } from './ingredients-response.dto';
 import { Collection } from '../model/collection.model';
 
 export interface CollectionResponse {
@@ -10,4 +11,9 @@ export function mapCollectionResponseToCollection(response: CollectionResponse):
     id: response.id,
     name: response.name,
   };
+}
+
+export interface CollectionWithFoodsResponse {
+  collection: CollectionResponse;
+  foods: IngredientResponse[];
 }

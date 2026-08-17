@@ -18,3 +18,4 @@ export interface IngredientWithProperties {
   ingredient: Ingredient;
   properties: PropertyWithValue[];
 }
+

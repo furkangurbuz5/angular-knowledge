@@ -4,8 +4,7 @@ import { map, Observable } from 'rxjs';
 import { mapCollectionResponseToCollection } from '../dto/collection-response.dto';
 import { AddFoodToCollectionRequest, CreateCollectionRequest } from '../dto/collection-request.dto';
 import { mapIngredientResponseToIngredient } from '../dto/ingredients-response.dto';
-import { Collection } from '../model/collection.model';
-import { Ingredient } from '../model/ingredient.model';
+import { Collection, CollectionWithFoods } from '../model/collection.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,10 +30,15 @@ export class CollectionService {
       .pipe(map((collection) => mapCollectionResponseToCollection(collection)));
   }
 
-  getFoodsByCollectionId(id: number): Observable<Ingredient[]> {
+  getFoodsByCollectionId(id: number): Observable<CollectionWithFoods> {
     return this.collectionClient.getFoodsByCollectionId(id).pipe(
-      map((ingredientResponse) => {
-        return ingredientResponse.map(mapIngredientResponseToIngredient);
+      map((collectionWithFoodsResponse) => {
+        return {
+          collection: mapCollectionResponseToCollection(collectionWithFoodsResponse.collection),
+          foods: collectionWithFoodsResponse.foods.map((food) =>
+            mapIngredientResponseToIngredient(food),
+          ),
+        };
       }),
     );
   }
@@ -45,7 +49,7 @@ export class CollectionService {
       .pipe(map((collection) => mapCollectionResponseToCollection(collection)));
   }
 
-  addFoodToCollection(id: number, request: AddFoodToCollectionRequest){
+  addFoodToCollection(id: number, request: AddFoodToCollectionRequest) {
     return this.collectionClient.addFoodToCollection(id, request);
   }
 }
