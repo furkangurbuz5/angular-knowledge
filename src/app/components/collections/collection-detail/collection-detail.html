@@ -4,12 +4,7 @@
   <div class="error-message">{{ errorMessage() }}</div>
 } @else if (collection()) {
   <div class="collection-detail-container">
-    <app-action
-      [item]="collection()"
-      (onBack)="onBack()"
-      (onDelete)="onDelete($event)"
-    ></app-action>
-
+    <h1>Collection: {{ collection().name }}</h1>
     <h2>Foods</h2>
     <div class="collection-food-card-container">
       @for (collectionFood of collectionFoods(); track collectionFood.id) {
@@ -46,5 +41,11 @@
         <button type="submit" class="button primary">Add Property</button>
       </div>
     </form>
+
+    <app-action
+      [item]="collection()"
+      (onBack)="onBack()"
+      (onDelete)="onDelete($event)"
+    ></app-action>
   </div>
 }

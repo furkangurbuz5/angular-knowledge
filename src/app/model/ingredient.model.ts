@@ -7,6 +7,14 @@ export interface Ingredient {
   unit: string;
 }
 
+export interface IngredientWithQuantity {
+  id: number;
+  name: string;
+  servingSize: number;
+  unit: string;
+  quantity: number;
+}
+
 export interface IngredientProperties {
   id: number;
   ingredientId: number;

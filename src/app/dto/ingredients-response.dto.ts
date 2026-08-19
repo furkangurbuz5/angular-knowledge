@@ -1,10 +1,22 @@
-import { Ingredient, IngredientProperties } from '../model/ingredient.model';
+import {
+  Ingredient,
+  IngredientProperties,
+  IngredientWithQuantity,
+} from '../model/ingredient.model';
 
 export interface IngredientResponse {
   id: number;
   name: string;
   servingSize: number;
   unit: string;
+}
+
+export interface IngredientWithQuantityResponse {
+  id: number;
+  name: string;
+  servingSize: number;
+  unit: string;
+  quantity: number;
 }
 
 export interface IngredientPropertiesResponse {
@@ -22,6 +34,18 @@ export function mapIngredientResponseToIngredient(
     name: ingredientResponse.name,
     servingSize: ingredientResponse.servingSize,
     unit: ingredientResponse.unit,
+  };
+}
+
+export function mapIngredientWithQuantityResponseToIngredient(
+  ingredientResponse: IngredientWithQuantityResponse,
+): IngredientWithQuantity {
+  return {
+    id: ingredientResponse.id,
+    name: ingredientResponse.name,
+    servingSize: ingredientResponse.servingSize,
+    unit: ingredientResponse.unit,
+    quantity: ingredientResponse.quantity,
   };
 }
 

@@ -3,7 +3,7 @@ import { CollectionClient } from '../client/collection-client';
 import { map, Observable } from 'rxjs';
 import { mapCollectionResponseToCollection } from '../dto/collection-response.dto';
 import { AddFoodToCollectionRequest, CreateCollectionRequest } from '../dto/collection-request.dto';
-import { mapIngredientResponseToIngredient } from '../dto/ingredients-response.dto';
+import { mapIngredientWithQuantityResponseToIngredient } from '../dto/ingredients-response.dto';
 import { Collection, CollectionWithFoods } from '../model/collection.model';
 
 @Injectable({
@@ -36,7 +36,7 @@ export class CollectionService {
         return {
           collection: mapCollectionResponseToCollection(collectionWithFoodsResponse.collection),
           foods: collectionWithFoodsResponse.foods.map((food) =>
-            mapIngredientResponseToIngredient(food),
+            mapIngredientWithQuantityResponseToIngredient(food),
           ),
         };
       }),

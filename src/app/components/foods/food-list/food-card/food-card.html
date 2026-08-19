@@ -1,9 +1,11 @@
 <div class="food-card">
   <div class="food-card-body">
-    <div class="food-field">
-      <span class="field-label">ID:</span>
-      <span class="field-value">{{ food().id }}</span>
-    </div>
+    @if (!noId()) {
+      <div class="food-field">
+        <span class="field-label">ID:</span>
+        <span class="field-value">{{ food().id }}</span>
+      </div>
+    }
     <div class="food-field">
       <span class="field-label">Name:</span>
       <span class="field-value">{{ food().name }}</span>

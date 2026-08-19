@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Ingredient } from '../../../model/ingredient.model';
+import { Ingredient, IngredientWithQuantity } from '../../../model/ingredient.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../service/food-service';
 import { catchError, finalize, forkJoin, take, throwError } from 'rxjs';
@@ -9,10 +9,11 @@ import { Collection } from '../../../model/collection.model';
 import { CollectionService } from '../../../service/collection-service';
 import { AddFoodToCollectionRequest } from '../../../dto/collection-request.dto';
 import { CollectionFoodCard } from './collection-food-card/collection-food-card';
+import { FoodCard } from '../../foods/food-list/food-card/food-card';
 
 @Component({
   selector: 'app-collection-detail',
-  imports: [Action, FormsModule, ReactiveFormsModule, CollectionFoodCard],
+  imports: [Action, FormsModule, ReactiveFormsModule, CollectionFoodCard, FoodCard],
   templateUrl: './collection-detail.html',
   styleUrl: './collection-detail.css',
 })
@@ -23,7 +24,7 @@ export class CollectionDetail {
   hasError = signal(false);
   errorMessage = signal<string>('');
   deleted = signal<boolean>(false);
-  collectionFoods = signal<Ingredient[]>([]);
+  collectionFoods = signal<IngredientWithQuantity[]>([]);
   foods = signal<Ingredient[]>([]);
 
   foodId: number = 0;

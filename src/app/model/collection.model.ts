@@ -1,11 +1,11 @@
-import { Ingredient } from './ingredient.model';
+import { IngredientWithQuantity } from './ingredient.model';
 
-export interface Collection{
+export interface Collection {
   id: number;
   name: string;
 }
 
-export interface CollectionWithFoods{
+export interface CollectionWithFoods {
   collection: Collection;
-  foods: Ingredient[];
+  foods: IngredientWithQuantity[];
 }

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Ingredient } from '../../../../model/ingredient.model';
+import { Ingredient, IngredientWithQuantity } from '../../../../model/ingredient.model';
 
 @Component({
   selector: 'app-collection-food-card',
@@ -8,5 +8,5 @@ import { Ingredient } from '../../../../model/ingredient.model';
   styleUrl: './collection-food-card.css',
 })
 export class CollectionFoodCard {
-  food = input.required<Ingredient>();
+  food = input.required<IngredientWithQuantity>();
 }

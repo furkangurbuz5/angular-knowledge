@@ -8,6 +8,7 @@ import {
 import {
   mapIngredientPropertiesResponseToIngredientProperties,
   mapIngredientResponseToIngredient,
+  mapIngredientWithQuantityResponseToIngredient,
 } from '../dto/ingredients-response.dto';
 import { Ingredient, IngredientProperties } from '../model/ingredient.model';
 

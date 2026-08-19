@@ -1,4 +1,4 @@
-import { IngredientResponse } from './ingredients-response.dto';
+import { IngredientWithQuantityResponse } from './ingredients-response.dto';
 import { Collection } from '../model/collection.model';
 
 export interface CollectionResponse {
@@ -15,5 +15,5 @@ export function mapCollectionResponseToCollection(response: CollectionResponse):
 
 export interface CollectionWithFoodsResponse {
   collection: CollectionResponse;
-  foods: IngredientResponse[];
+  foods: IngredientWithQuantityResponse[];
 }
