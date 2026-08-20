@@ -47,10 +47,8 @@ export class CollectionService {
     );
   }
 
-  deleteCollectionById(id: number): Observable<Collection> {
-    return this.collectionClient
-      .deleteCollectionById(id)
-      .pipe(map((collection) => mapCollectionResponseToCollection(collection)));
+  deleteCollectionById(id: number): Observable<void> {
+    return this.collectionClient.deleteCollectionById(id);
   }
 
   addFoodToCollection(id: number, request: AddFoodToCollectionRequest) {

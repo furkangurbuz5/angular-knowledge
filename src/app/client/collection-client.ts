@@ -37,7 +37,7 @@ export class CollectionClient {
   }
 
   deleteCollectionById(id: number) {
-    return this.httpClient.delete<CollectionResponse>(
+    return this.httpClient.delete<void>(
       `http://localhost:8080/api/v1/collections/${id}`,
     );
   }
