@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Ingredient } from '../../../../model/ingredient.model';
 
 @Component({
@@ -11,4 +11,10 @@ export class FoodCard {
   food = input.required<Ingredient>();
   showId = input<boolean>(true);
   showName = input<boolean>(true);
+  editable = input<boolean>(false);
+  save = output<Ingredient>();
+
+  protected onSave() {
+    this.save.emit(this.food());
+  }
 }

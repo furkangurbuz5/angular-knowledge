@@ -4,15 +4,18 @@
   <div class="error-message">{{ errorMessage() }}</div>
 } @else if (food().id) {
   <div class="food-detail-container">
-    <h3>Food: {{ food().name }}</h3>
+    <h1>Food: {{ food().name }}</h1>
     <app-food-card
       [food]="food()"
+      [editable]="editable()"
+      (save)="patchFood($event)"
     >
     </app-food-card>
     <app-action
       [item]="food()"
       (onBack)="onBack()"
-      (onDelete)="onDelete($event!)"
+      (onDelete)="onDelete($event)"
+      (onEdit)="onEdit()"
     ></app-action>
 
     <h2>Properties</h2>

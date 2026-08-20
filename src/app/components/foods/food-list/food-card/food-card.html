@@ -20,5 +20,9 @@
       <span class="field-label">Unit:</span>
       <span class="field-value">{{ food().unit }}</span>
     </div>
+
+    @if(editable()){
+      <button (click)="onSave()">Save</button>
+    }
   </div>
 </div>

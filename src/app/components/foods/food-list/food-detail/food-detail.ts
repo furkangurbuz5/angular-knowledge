@@ -28,6 +28,7 @@ export class FoodDetail {
   foodProperties = signal<PropertyWithValue[]>([]);
   properties = signal<Property[]>([]);
   selectedProperty = signal<Property>({ id: 0, name: '', unit: '' });
+  editable = signal<boolean>(false);
 
   propertyId: number = 0;
   propertyValue: number = 0;
@@ -99,6 +100,20 @@ export class FoodDetail {
         }),
       )
       .subscribe();
+  }
+
+  protected onEdit(): void {
+    this.editable.update((editable) => {
+      return !editable;
+    });
+  }
+
+  protected patchFood(food: Ingredient){
+    this.editable.update((editable) => {
+      return !editable;
+    });
+
+
   }
 
   private loadFoodAndProperties() {

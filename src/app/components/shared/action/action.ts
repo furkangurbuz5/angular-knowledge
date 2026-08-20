@@ -9,7 +9,7 @@ import { Person } from '../../../model/person.model';
 })
 export class Action<T> {
   item = input.required<T>();
-  onEdit = output<T>();
+  onEdit = output<void>();
   onDelete = output<T>();
   onBack = output<void>();
 }
