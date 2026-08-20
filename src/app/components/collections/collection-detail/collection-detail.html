@@ -23,7 +23,7 @@
           id="add_food"
           name="food"
           [(ngModel)]="foodId"
-          (click)="getSelectedFood()"
+          (change)="getSelectedFood()"
         >
           @for (food of foods(); track $index) {
             <option [value]="food.id">{{ food.name }}</option>
@@ -32,7 +32,7 @@
       </div>
 
       @if (selectedFood().id != 0) {
-        <app-food-card [showId]="false" [food]="selectedFood()"></app-food-card>
+        <app-food-card [showId]="false" [showName]="false" [food]="selectedFood()"></app-food-card>
       }
       <div class="add-food-form-field">
         <label for="add_quantity">Quantity</label>
