@@ -10,4 +10,5 @@ import { Property } from '../../../../model/properties.model';
 export class PropertyCard {
   property = input.required<Property>();
   showId = input<boolean>(true);
+  showName = input<boolean>(true);
 }

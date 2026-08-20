@@ -6,10 +6,12 @@
         <span class="field-value">{{ food().id }}</span>
       </div>
     }
-    <div class="food-field">
-      <span class="field-label">Name:</span>
-      <span class="field-value">{{ food().name }}</span>
-    </div>
+    @if (showName()) {
+      <div class="food-field">
+        <span class="field-label">Name:</span>
+        <span class="field-value">{{ food().name }}</span>
+      </div>
+    }
     <div class="food-field">
       <span class="field-label">Serving size:</span>
       <span class="field-value">{{ food().servingSize }}</span>

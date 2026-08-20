@@ -2,10 +2,11 @@
   <div class="loading-spinner">Loading...</div>
 } @else if (hasError()) {
   <div class="error-message">{{ errorMessage() }}</div>
-} @else if (food()) {
+} @else if (food().id) {
   <div class="food-detail-container">
+    <h3>Food: {{ food().name }}</h3>
     <app-food-card
-      [food]="food()!"
+      [food]="food()"
     >
     </app-food-card>
     <app-action
@@ -39,7 +40,7 @@
       </div>
 
       @if (selectedProperty().id != 0) {
-        <app-property-card [showId]="false" [property]="selectedProperty()"></app-property-card>
+        <app-property-card [showName]="false" [showId]="false" [property]="selectedProperty()"></app-property-card>
       }
 
       <div class="add-property-form-field">

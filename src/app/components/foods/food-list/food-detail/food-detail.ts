@@ -20,7 +20,7 @@ import { PropertyCard } from '../../property/property-card/property-card';
 })
 export class FoodDetail {
   ingredientId = signal(0);
-  food = signal<Ingredient | null>(null);
+  food = signal<Ingredient>({ id: 0, name: '', servingSize: 0, unit: '' });
   isLoading = signal(true);
   hasError = signal(false);
   errorMessage = signal<string>('');
