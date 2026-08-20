@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, finalize, forkJoin, take, throwError } from 'rxjs';
+import { catchError, finalize, forkJoin, take, tap, throwError } from 'rxjs';
 import { Ingredient } from '../../../../model/ingredient.model';
 import { FoodService } from '../../../../service/food-service';
 import { Action } from '../../../shared/action/action';
@@ -10,10 +10,11 @@ import { PropertyService } from '../../../../service/property-service';
 import { FoodPropertyCard } from '../food-property-card/food-property-card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyToIngredientRequest } from '../../../../dto/ingredients-request.dto';
+import { PropertyCard } from '../../property/property-card/property-card';
 
 @Component({
   selector: 'app-food-person-detail',
-  imports: [Action, FoodCard, FoodPropertyCard, FormsModule, ReactiveFormsModule],
+  imports: [Action, FoodCard, FoodPropertyCard, FormsModule, ReactiveFormsModule, PropertyCard],
   templateUrl: './food-detail.html',
   styleUrl: './food-detail.css',
 })
@@ -26,6 +27,7 @@ export class FoodDetail {
   deleted = signal<boolean>(false);
   foodProperties = signal<PropertyWithValue[]>([]);
   properties = signal<Property[]>([]);
+  selectedProperty = signal<Property>({ id: 0, name: '', unit: '' });
 
   propertyId: number = 0;
   propertyValue: number = 0;
@@ -80,8 +82,23 @@ export class FoodDetail {
         error: (err: Error) => {
           this.hasError.set(true);
           this.errorMessage.set(err.message);
-        }
+        },
       });
+  }
+
+  protected getSelectedProperty() {
+    if (!this.propertyId) {
+      return;
+    }
+
+    this.propertyService
+      .getPropertyById(this.propertyId)
+      .pipe(
+        tap((property: Property) => {
+          this.selectedProperty.set(property);
+        }),
+      )
+      .subscribe();
   }
 
   private loadFoodAndProperties() {

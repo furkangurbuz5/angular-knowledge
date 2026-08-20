@@ -30,12 +30,17 @@
           id="add_property"
           name="property"
           [(ngModel)]="propertyId"
+          (click)="getSelectedProperty()"
         >
           @for (property of properties(); track $index) {
             <option [value]="property.id">{{ property.name }}</option>
           }
         </select>
       </div>
+
+      @if (selectedProperty().id != 0) {
+        <app-property-card [showId]="false" [property]="selectedProperty()"></app-property-card>
+      }
 
       <div class="add-property-form-field">
         <label for="add_property_value">Value</label>

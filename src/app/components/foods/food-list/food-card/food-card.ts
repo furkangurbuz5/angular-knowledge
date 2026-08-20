@@ -9,5 +9,5 @@ import { Ingredient } from '../../../../model/ingredient.model';
 })
 export class FoodCard {
   food = input.required<Ingredient>();
-  noId = input<boolean>(false);
+  showId = input<boolean>(true);
 }

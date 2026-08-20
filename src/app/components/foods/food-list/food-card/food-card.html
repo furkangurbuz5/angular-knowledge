@@ -1,6 +1,6 @@
 <div class="food-card">
   <div class="food-card-body">
-    @if (!noId()) {
+    @if (showId()) {
       <div class="food-field">
         <span class="field-label">ID:</span>
         <span class="field-value">{{ food().id }}</span>

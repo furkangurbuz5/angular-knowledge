@@ -32,7 +32,7 @@
       </div>
 
       @if (selectedFood().id != 0) {
-        <app-food-card [noId]="true" [food]="selectedFood()"></app-food-card>
+        <app-food-card [showId]="false" [food]="selectedFood()"></app-food-card>
       }
       <div class="add-food-form-field">
         <label for="add_quantity">Quantity</label>
