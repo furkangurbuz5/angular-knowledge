@@ -2,18 +2,29 @@ import { Component, inject, signal } from '@angular/core';
 import { Ingredient, IngredientWithQuantity } from '../../../model/ingredient.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../service/food-service';
-import { catchError, finalize, forkJoin, take, throwError } from 'rxjs';
+import { catchError, finalize, forkJoin, take, tap, throwError } from 'rxjs';
 import { Action } from '../../shared/action/action';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Collection } from '../../../model/collection.model';
 import { CollectionService } from '../../../service/collection-service';
-import { AddFoodToCollectionRequest } from '../../../dto/collection-request.dto';
+import {
+  AddFoodToCollectionRequest,
+  DeleteFoodFromCollectionRequest,
+} from '../../../dto/collection-request.dto';
 import { CollectionFoodCard } from './collection-food-card/collection-food-card';
+import { CollectionStats } from './collection-stats/collection-stats';
 import { FoodCard } from '../../foods/food-list/food-card/food-card';
 
 @Component({
   selector: 'app-collection-detail',
-  imports: [Action, FormsModule, ReactiveFormsModule, CollectionFoodCard, FoodCard],
+  imports: [
+    Action,
+    FormsModule,
+    ReactiveFormsModule,
+    CollectionFoodCard,
+    CollectionStats,
+    FoodCard,
+  ],
   templateUrl: './collection-detail.html',
   styleUrl: './collection-detail.css',
 })
@@ -26,6 +37,7 @@ export class CollectionDetail {
   deleted = signal<boolean>(false);
   collectionFoods = signal<IngredientWithQuantity[]>([]);
   foods = signal<Ingredient[]>([]);
+  selectedFood = signal<Ingredient>({ id: 0, name: '', servingSize: 0, unit: '' });
 
   foodId: number = 0;
   quantity: number = 0;
@@ -44,6 +56,20 @@ export class CollectionDetail {
 
   protected onBack(): void {
     this.router.navigate(['/collections']).then(() => console.log('navigating to /collections'));
+  }
+
+  protected onFoodDelete(food: IngredientWithQuantity): void {
+    const foodToDelete: DeleteFoodFromCollectionRequest = {
+      ingredient_id: food.id,
+    };
+    this.collectionService
+      .deleteFoodFromCollection(this.collectionId(), foodToDelete)
+      .pipe(
+        finalize(() => {
+          this.loadCollectionAndFoods();
+        }),
+      )
+      .subscribe();
   }
 
   protected onDelete(collection: Collection): void {
@@ -87,6 +113,22 @@ export class CollectionDetail {
       });
   }
 
+  protected getSelectedFood() {
+    if (!this.foodId) {
+      return;
+    }
+    this.foodService
+      .getFoodById(this.foodId)
+      .pipe(
+        tap((food) => {
+          this.selectedFood.set(food);
+        }),
+      )
+      .subscribe((food) => {
+        console.log(food);
+      });
+  }
+
   private loadCollectionAndFoods() {
     forkJoin({
       collectionWithFoods: this.collectionService.getFoodsByCollectionId(this.collectionId()),
@@ -94,6 +136,11 @@ export class CollectionDetail {
     })
       .pipe(
         take(1),
+        tap(({ collectionWithFoods }) => {
+          if (!collectionWithFoods.collection) {
+            throw Error('No collection found!');
+          }
+        }),
         finalize(() => {
           this.isLoading.set(false);
         }),
@@ -104,9 +151,9 @@ export class CollectionDetail {
           this.collectionFoods.set(collectionWithFoods.foods);
           this.foods.set(foods);
         },
-        error: () => {
+        error: (error: Error) => {
           this.hasError.set(true);
-          this.errorMessage.set('Failed to load collection details.');
+          this.errorMessage.set(error.message);
         },
       });
   }

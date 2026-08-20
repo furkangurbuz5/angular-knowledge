@@ -8,12 +8,14 @@
     <h2>Foods</h2>
     <div class="collection-food-card-container">
       @for (collectionFood of collectionFoods(); track collectionFood.id) {
-        <app-collection-food-card [food]="collectionFood"></app-collection-food-card>
+        <app-collection-food-card (delete)="onFoodDelete($event)" [food]="collectionFood"></app-collection-food-card>
       }
     </div>
 
-    <h3>Add a food</h3>
+    <h3>Collection stats</h3>
+    <app-collection-stats [collection]="collectionFoods()"></app-collection-stats>
 
+    <h3>Add a food</h3>
     <form class="add-food-form" (ngSubmit)="addFoodToCollection()">
       <div class="add-food-form-field">
         <label for="add_food">Food</label>
@@ -21,6 +23,7 @@
           id="add_food"
           name="food"
           [(ngModel)]="foodId"
+          (click)="getSelectedFood()"
         >
           @for (food of foods(); track $index) {
             <option [value]="food.id">{{ food.name }}</option>
@@ -28,6 +31,9 @@
         </select>
       </div>
 
+      @if (selectedFood().id != 0) {
+        <app-food-card [noId]="true" [food]="selectedFood()"></app-food-card>
+      }
       <div class="add-food-form-field">
         <label for="add_quantity">Quantity</label>
         <input

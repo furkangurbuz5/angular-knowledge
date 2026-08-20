@@ -1,4 +1,4 @@
-.food-card {
+.collection-food-card {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -6,25 +6,25 @@
   background: #ffffff;
 }
 
-.food-card-header {
+.collection-food-card-header {
   padding: 16px;
   background: #f5f5f5;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.food-card-header h2 {
+.collection-food-card-header h2 {
   margin: 0;
   font-size: 1.5rem;
   color: #333;
 }
 
-.food-card-body {
+.collection-food-card-body {
   padding: 16px;
 }
 
-.food-field {
+.collection-food-field {
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: 0.3rem;
 }
 
 .field-label {
@@ -35,4 +35,14 @@
 
 .field-value {
   color: #333;
+}
+
+.collection-food-card-button{
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  background-color: #f44336;
 }

@@ -1,8 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CollectionResponse, CollectionWithFoodsResponse } from '../dto/collection-response.dto';
-import { AddFoodToCollectionRequest, CreateCollectionRequest } from '../dto/collection-request.dto';
-import { IngredientResponse } from '../dto/ingredients-response.dto';
+import {
+  AddFoodToCollectionRequest,
+  CreateCollectionRequest,
+  DeleteFoodFromCollectionRequest,
+} from '../dto/collection-request.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -39,10 +42,17 @@ export class CollectionClient {
     );
   }
 
-  addFoodToCollection(id: number, request: AddFoodToCollectionRequest){
+  addFoodToCollection(id: number, request: AddFoodToCollectionRequest) {
     return this.httpClient.post<CollectionResponse>(
       `http://localhost:8080/api/v1/collections/${id}/foods`,
-      request
+      request,
+    );
+  }
+
+  deleteFoodFromCollection(id: number, request: DeleteFoodFromCollectionRequest) {
+    return this.httpClient.delete<CollectionResponse>(
+      `http://localhost:8080/api/v1/collections/${id}/foods`,
+      { body: request },
     );
   }
 }

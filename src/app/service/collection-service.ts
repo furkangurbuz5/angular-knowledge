@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { CollectionClient } from '../client/collection-client';
 import { map, Observable } from 'rxjs';
 import { mapCollectionResponseToCollection } from '../dto/collection-response.dto';
-import { AddFoodToCollectionRequest, CreateCollectionRequest } from '../dto/collection-request.dto';
+import {
+  AddFoodToCollectionRequest,
+  CreateCollectionRequest,
+  DeleteFoodFromCollectionRequest,
+} from '../dto/collection-request.dto';
 import { mapIngredientWithQuantityResponseToIngredient } from '../dto/ingredients-response.dto';
 import { Collection, CollectionWithFoods } from '../model/collection.model';
 
@@ -51,5 +55,9 @@ export class CollectionService {
 
   addFoodToCollection(id: number, request: AddFoodToCollectionRequest) {
     return this.collectionClient.addFoodToCollection(id, request);
+  }
+
+  deleteFoodFromCollection(id: number, request: DeleteFoodFromCollectionRequest) {
+    return this.collectionClient.deleteFoodFromCollection(id, request);
   }
 }

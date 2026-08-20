@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { Ingredient, IngredientWithQuantity } from '../../../../model/ingredient.model';
+import { Component, input, output } from '@angular/core';
+import { IngredientWithQuantity } from '../../../../model/ingredient.model';
 
 @Component({
   selector: 'app-collection-food-card',
@@ -9,4 +9,10 @@ import { Ingredient, IngredientWithQuantity } from '../../../../model/ingredient
 })
 export class CollectionFoodCard {
   food = input.required<IngredientWithQuantity>();
+  delete = output<IngredientWithQuantity>();
+
+  protected onDelete(): void {
+    console.log(this.food());
+    this.delete.emit(this.food());
+  }
 }
