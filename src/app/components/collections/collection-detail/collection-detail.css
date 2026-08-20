@@ -38,7 +38,6 @@
 
 .add-food-form-field label {
   font-weight: 500;
-  color: #666;
   font-size: 0.9rem;
 }
 
@@ -48,7 +47,6 @@
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
-  color: #333;
   background: #ffffff;
   transition: border-color 0.2s, box-shadow 0.2s;
 }

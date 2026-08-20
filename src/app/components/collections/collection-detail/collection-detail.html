@@ -2,7 +2,7 @@
   <div class="loading-spinner">Loading...</div>
 } @else if (hasError()) {
   <div class="error-message">{{ errorMessage() }}</div>
-} @else if (collection()) {
+} @else if (collection().id) {
   <div class="collection-detail-container">
     <h1>Collection: {{ collection().name }}</h1>
     <h2>Foods</h2>

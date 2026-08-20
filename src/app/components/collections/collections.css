@@ -1,5 +1,5 @@
 .collection-container {
-  background: #ffffff;
+  background: darkgray;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 24px;
@@ -11,7 +11,6 @@
 .collection-container h2 {
   margin: 0 0 24px;
   color: #333;
-  text-align: center;
 }
 
 /* Property person-list styling */
