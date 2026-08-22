@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Ingredient, IngredientWithQuantity } from '../../../model/ingredient.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../service/food-service';
@@ -19,6 +19,7 @@ import { CollectionFoodCard } from './collection-food-card/collection-food-card'
   imports: [FormsModule, ReactiveFormsModule, FoodCard, CollectionStats, CollectionFoodCard],
   templateUrl: './collection-detail.html',
   styleUrl: './collection-detail.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollectionDetail {
   collectionId = signal(0);

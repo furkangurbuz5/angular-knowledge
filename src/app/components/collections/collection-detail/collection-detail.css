@@ -1,7 +1,5 @@
 .collection-detail-container {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 16px;
+  max-width: 30%;
 }
 
 .loading-spinner {
@@ -18,29 +16,11 @@
   font-size: 1.2rem;
 }
 
-/* Left-to-right layout for the three component areas */
-.collection-components-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: start;
-  gap: 24px;
-  width: 100%;
-}
-
-.collection-foods,
-.collection-stats,
-.add-food {
-  min-width: 0;
-}
-
 .collection-food-card-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
-.collection-stats,
-
 
 .add-food-form {
   display: flex;
@@ -59,22 +39,31 @@
   font-size: 0.9rem;
 }
 
-.add-food-form-field input,
+
 .add-food-form-field select {
-  width: 100%;
-  box-sizing: border-box;
   padding: 8px 12px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
   background: #ffffff;
   transition: border-color 0.2s, box-shadow 0.2s;
+  max-width: 20%;
+}
+
+.add-food-form-field input {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  max-width: 5%;
 }
 
 .add-food-form-field input:focus,
 .add-food-form-field select:focus {
   outline: none;
-  border-color: #2196f3;
+  border-color: #2196F3;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
@@ -84,7 +73,6 @@
 
 .form-actions {
   display: flex;
-  justify-content: flex-end;
 }
 
 .button {
@@ -97,7 +85,7 @@
 }
 
 .button.primary {
-  background-color: #2196f3;
+  background-color: #2196F3;
   color: white;
 }
 
@@ -107,15 +95,4 @@
 
 .button:active:not(:disabled) {
   transform: scale(0.98);
-}
-
-/* Stack the columns on smaller screens */
-@media (max-width: 900px) {
-  .collection-detail-container {
-    max-width: 600px;
-  }
-
-  .collection-components-row {
-    grid-template-columns: 1fr;
-  }
 }
