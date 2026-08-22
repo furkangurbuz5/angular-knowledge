@@ -1,0 +1,59 @@
+.property-list {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 32rem;
+}
+
+.property-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 6%);
+
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.property-card:hover {
+  border-color: #c7d2fe;
+  box-shadow: 0 5px 14px rgb(0 0 0 / 10%);
+  transform: translateY(-1px);
+}
+
+.property-name {
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.property-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.property-amount {
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.property-unit {
+  margin-top: 0.2rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+

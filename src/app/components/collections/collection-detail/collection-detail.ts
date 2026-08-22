@@ -3,28 +3,20 @@ import { Ingredient, IngredientWithQuantity } from '../../../model/ingredient.mo
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../service/food-service';
 import { catchError, finalize, forkJoin, take, tap, throwError } from 'rxjs';
-import { Action } from '../../shared/action/action';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Collection } from '../../../model/collection.model';
+import { Collection, CollectionProperties } from '../../../model/collection.model';
 import { CollectionService } from '../../../service/collection-service';
 import {
   AddFoodToCollectionRequest,
   DeleteFoodFromCollectionRequest,
 } from '../../../dto/collection-request.dto';
-import { CollectionFoodCard } from './collection-food-card/collection-food-card';
-import { CollectionStats } from './collection-stats/collection-stats';
 import { FoodCard } from '../../foods/food-list/food-card/food-card';
+import { CollectionStats } from './collection-stats/collection-stats';
+import { CollectionFoodCard } from './collection-food-card/collection-food-card';
 
 @Component({
   selector: 'app-collection-detail',
-  imports: [
-    Action,
-    FormsModule,
-    ReactiveFormsModule,
-    CollectionFoodCard,
-    CollectionStats,
-    FoodCard,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, FoodCard, CollectionStats, CollectionFoodCard],
   templateUrl: './collection-detail.html',
   styleUrl: './collection-detail.css',
 })
@@ -36,6 +28,7 @@ export class CollectionDetail {
   errorMessage = signal<string>('');
   deleted = signal<boolean>(false);
   collectionFoods = signal<IngredientWithQuantity[]>([]);
+  collectionProperties = signal<CollectionProperties[]>([]);
   foods = signal<Ingredient[]>([]);
   selectedFood = signal<Ingredient>({ id: 0, name: '', servingSize: 0, unit: '' });
 
@@ -103,6 +96,14 @@ export class CollectionDetail {
         }),
         finalize(() => {
           this.updateCollectionFoods();
+          this.foodId = 0;
+          this.quantity = 0;
+          this.selectedFood.set({
+            id: 0,
+            name: '',
+            servingSize: 0,
+            unit: '',
+          });
         }),
       )
       .subscribe({
@@ -149,6 +150,7 @@ export class CollectionDetail {
         next: ({ collectionWithFoods, foods }) => {
           this.collection.set(collectionWithFoods.collection);
           this.collectionFoods.set(collectionWithFoods.foods);
+          this.collectionProperties.set(collectionWithFoods.collectionProperties);
           this.foods.set(foods);
         },
         error: (error: Error) => {
@@ -164,6 +166,7 @@ export class CollectionDetail {
       .pipe(take(1))
       .subscribe((collectionWithFoods) => {
         this.collectionFoods.set(collectionWithFoods.foods);
+        this.collectionProperties.set(collectionWithFoods.collectionProperties);
       });
   }
 }

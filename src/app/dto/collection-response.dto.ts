@@ -15,5 +15,24 @@ export function mapCollectionResponseToCollection(response: CollectionResponse):
 
 export interface CollectionWithFoodsResponse {
   collection: CollectionResponse;
-  foods: IngredientWithQuantityResponse[];
+  ingredients: IngredientWithQuantityResponse[];
+  collectionProperties: CollectionPropertiesResponse[];
+}
+
+export interface CollectionPropertiesResponse {
+  propertyId: number;
+  propertyName: string;
+  unit: string;
+  propertyAmount: number;
+}
+
+export function mapCollectionPropertyResponseToCollection(
+  response: CollectionPropertiesResponse,
+): CollectionPropertiesResponse {
+  return {
+    propertyId: response.propertyId,
+    propertyName: response.propertyName,
+    unit: response.unit,
+    propertyAmount: response.propertyAmount,
+  };
 }

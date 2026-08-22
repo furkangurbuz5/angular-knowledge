@@ -8,4 +8,12 @@ export interface Collection {
 export interface CollectionWithFoods {
   collection: Collection;
   foods: IngredientWithQuantity[];
+  collectionProperties: CollectionProperties[];
+}
+
+export interface CollectionProperties {
+  propertyId: number;
+  propertyName: string;
+  unit: string;
+  propertyAmount: number;
 }

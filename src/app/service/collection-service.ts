@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { CollectionClient } from '../client/collection-client';
 import { map, Observable } from 'rxjs';
-import { mapCollectionResponseToCollection } from '../dto/collection-response.dto';
+import {
+  mapCollectionPropertyResponseToCollection,
+  mapCollectionResponseToCollection,
+} from '../dto/collection-response.dto';
 import {
   AddFoodToCollectionRequest,
   CreateCollectionRequest,
@@ -36,11 +39,14 @@ export class CollectionService {
 
   getFoodsByCollectionId(id: number): Observable<CollectionWithFoods> {
     return this.collectionClient.getFoodsByCollectionId(id).pipe(
-      map((collectionWithFoodsResponse) => {
+      map((collectionWithFoodsResponse): CollectionWithFoods => {
         return {
           collection: mapCollectionResponseToCollection(collectionWithFoodsResponse.collection),
-          foods: collectionWithFoodsResponse.foods.map((food) =>
+          foods: collectionWithFoodsResponse.ingredients.map((food) =>
             mapIngredientWithQuantityResponseToIngredient(food),
+          ),
+          collectionProperties: collectionWithFoodsResponse.collectionProperties.map((property) =>
+            mapCollectionPropertyResponseToCollection(property),
           ),
         };
       }),

@@ -1,21 +1,27 @@
-@if (isLoading()) {
-  <div class="loading-spinner">Loading...</div>
-} @else if (hasError()) {
-  <div class="error-message">{{ errorMessage() }}</div>
-} @else if (collection().id) {
-  <div class="collection-detail-container">
-    <h1>Collection: {{ collection().name }}</h1>
+<div class="collection-components-row">
+  <div class="collection-foods">
     <h2>Foods</h2>
+
     <div class="collection-food-card-container">
       @for (collectionFood of collectionFoods(); track collectionFood.id) {
-        <app-collection-food-card (delete)="onFoodDelete($event)" [food]="collectionFood"></app-collection-food-card>
+        <app-collection-food-card
+          [food]="collectionFood"
+          (delete)="onFoodDelete($event)">
+        </app-collection-food-card>
       }
     </div>
+  </div>
 
+  <div class="collection-stats">
     <h3>Collection stats</h3>
-    <app-collection-stats [collection]="collectionFoods()"></app-collection-stats>
+    <app-collection-stats
+      [collectionProperties]="collectionProperties()">
+    </app-collection-stats>
+  </div>
 
+  <div class="add-food">
     <h3>Add a food</h3>
+
     <form class="add-food-form" (ngSubmit)="addFoodToCollection()">
       <div class="add-food-form-field">
         <label for="add_food">Food</label>
@@ -23,8 +29,7 @@
           id="add_food"
           name="food"
           [(ngModel)]="foodId"
-          (change)="getSelectedFood()"
-        >
+          (change)="getSelectedFood()">
           @for (food of foods(); track $index) {
             <option [value]="food.id">{{ food.name }}</option>
           }
@@ -32,8 +37,13 @@
       </div>
 
       @if (selectedFood().id != 0) {
-        <app-food-card [showId]="false" [showName]="false" [food]="selectedFood()"></app-food-card>
+        <app-food-card
+          [showId]="false"
+          [showName]="false"
+          [food]="selectedFood()">
+        </app-food-card>
       }
+
       <div class="add-food-form-field">
         <label for="add_quantity">Quantity</label>
         <input
@@ -43,15 +53,12 @@
           name="quantity"
           placeholder="E.g. 250" />
       </div>
+
       <div class="form-actions">
-        <button type="submit" class="button primary">Add Property</button>
+        <button type="submit" class="button primary">
+          Add Food
+        </button>
       </div>
     </form>
-
-    <app-action
-      [item]="collection()"
-      (onBack)="onBack()"
-      (onDelete)="onDelete($event)"
-    ></app-action>
   </div>
-}
+</div>

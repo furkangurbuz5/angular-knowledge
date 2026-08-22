@@ -1,2 +1,21 @@
-
-
+@if (collectionProperties().length > 0) {
+  <div class="property-list">
+    @for (property of collectionProperties(); track property.propertyId) {
+      <div class="property-card">
+        <span class="property-name">
+          {{ property.propertyName }}
+        </span>
+        <span class="property-value">
+          <span class="property-amount">
+            {{ property.propertyAmount }}
+          </span>
+          <span class="property-unit">
+            {{ property.unit }}
+          </span>
+      </span>
+      </div>
+    }
+  </div>
+} @else {
+  <p>No properties available.</p>
+}
