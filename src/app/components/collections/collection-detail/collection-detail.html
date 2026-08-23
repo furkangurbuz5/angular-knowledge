@@ -2,11 +2,15 @@
   <h2>Foods</h2>
 
   <div class="collection-food-card-container">
-    @for (collectionFood of collectionFoods(); track collectionFood.id) {
-      <app-collection-food-card
-        [food]="collectionFood"
-        (delete)="onFoodDelete($event)">
-      </app-collection-food-card>
+    @if (collectionFoods().length > 0) {
+      @for (collectionFood of collectionFoods(); track collectionFood.id) {
+        <app-collection-food-card
+          [food]="collectionFood"
+          (delete)="onFoodDelete($event)">
+        </app-collection-food-card>
+      }
+    } @else {
+      <p>No foods available.</p>
     }
   </div>
 </div>

@@ -1,8 +1,0 @@
-@if (isLoading()) {
-  <div class="loading">Loading...</div>
-} @else if (error()) {
-  <div class="error">{{ error() }}</div>
-} @else {
-  <app-search (search)="onSearch($event)"></app-search>
-  <app-table [persons]="filteredPersons()"></app-table>
-}

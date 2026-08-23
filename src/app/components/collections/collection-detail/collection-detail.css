@@ -96,3 +96,7 @@
 .button:active:not(:disabled) {
   transform: scale(0.98);
 }
+
+app-food-card{
+  max-width: 30%;
+}

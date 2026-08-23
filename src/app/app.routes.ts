@@ -1,8 +1,5 @@
 import { Routes } from '@angular/router';
-import { PersonDetail } from './components/person-list/person-detail/person-detail';
-import { PersonList } from './components/person-list/person-list';
 import { Dashboard } from './components/dashboard/dashboard';
-import { AddPerson } from './components/form/add-person.component';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { PropertyList } from './components/foods/property/property-list.component';
 import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
@@ -16,11 +13,6 @@ export const routes: Routes = [
     path: '',
     component: Dashboard,
     title: 'Dashboard',
-  },
-  {
-    path: 'person/:id',
-    component: PersonDetail,
-    title: 'Person details',
   },
   {
     path: 'property/:id',
@@ -38,19 +30,9 @@ export const routes: Routes = [
     title: 'Collection details',
   },
   {
-    path: 'persons',
-    component: PersonList,
-    title: 'People',
-  },
-  {
     path: 'dashboard',
     component: Dashboard,
     title: 'Dashboard',
-  },
-  {
-    path: 'add-person',
-    component: AddPerson,
-    title: 'Add a person',
   },
   {
     path: 'foods',

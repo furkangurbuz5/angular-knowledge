@@ -1,11 +1,11 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { PersonService } from '../../service/person-service';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   debounceTime,
   distinctUntilChanged,
   fromEvent,
   interval,
   Observable,
+  of,
   Subject,
   switchMap,
   takeUntil,
@@ -28,7 +28,6 @@ export class RxjsDemo implements OnInit, OnDestroy {
 
   leakyCounter = signal(0);
   fixedCounter = signal(0);
-  private personService = inject(PersonService);
   private destroy$ = new Subject<void>();
   private leakyIntervalId?: number;
   private fixedInterval$?: Observable<number>;
@@ -41,14 +40,11 @@ export class RxjsDemo implements OnInit, OnDestroy {
         debounceTime(300),
         distinctUntilChanged(),
         switchMap((query) => {
-          return this.personService
-            .getPersonsByFirstName(query!)
-            .pipe(tap(() => this.isSearching.set(false)));
+          return of(null).pipe(tap(() => this.isSearching.set(false)));
         }),
         takeUntil(this.destroy$),
       )
-      .subscribe((results) => {
-        this.searchResults.set(results);
+      .subscribe(() => {
         this.searchQuery.set(this.searchControl.value || '');
       });
 
