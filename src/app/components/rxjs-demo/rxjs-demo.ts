@@ -12,7 +12,6 @@ import {
   tap,
 } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Person } from '../../model/person.model';
 
 @Component({
   selector: 'app-rxjs-demo',
@@ -22,7 +21,6 @@ import { Person } from '../../model/person.model';
 })
 export class RxjsDemo implements OnInit, OnDestroy {
   searchControl = new FormControl('');
-  searchResults = signal<Person[]>([]);
   isSearching = signal(false);
   searchQuery = signal('');
 

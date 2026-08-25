@@ -1,0 +1,51 @@
+<div>
+  <h1>{{ dish().name }}</h1>
+
+  <div>
+    @if (dishFoods().length > 0) {
+      @for (collectionFood of dishFoods(); track collectionFood.id) {
+        <app-collection-food-card [food]="collectionFood" (delete)="onFoodDelete($event)">
+        </app-collection-food-card>
+      }
+    } @else {
+      <p>No foods available.</p>
+    }
+  </div>
+  <button (click)="onDelete()">Delete Dish</button>
+</div>
+
+<h3>Add a food</h3>
+
+<form (ngSubmit)="addFoodToDish()">
+  <div>
+    <label for="add_food">Food</label>
+    <select id="add_food" name="food" [(ngModel)]="foodId" (change)="getSelectedFood()">
+      @for (food of foods(); track $index) {
+        <option [value]="food.id">{{ food.name }}</option>
+      }
+    </select>
+  </div>
+
+  @if (selectedFood().id != 0) {
+    <app-food-card [showId]="false" [showName]="false" [food]="selectedFood()"> </app-food-card>
+  }
+
+  <div>
+    <label for="add_quantity">Quantity</label>
+    <input
+      id="add_quantity"
+      type="number"
+      [(ngModel)]="quantity"
+      name="quantity"
+      placeholder="E.g. 250"
+    />
+  </div>
+
+  <div>
+    <button type="submit" class="button primary">Add Food</button>
+  </div>
+</form>
+<div class="collection-stats">
+  <h3>Summary</h3>
+  <app-collection-stats [collectionProperties]="dishProperties()"> </app-collection-stats>
+</div>

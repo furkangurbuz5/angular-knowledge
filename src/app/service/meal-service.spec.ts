@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CollectionClient } from './collection-client';
+import { MealService } from './meal-service';
 
-describe('CollectionClient', () => {
-  let service: CollectionClient;
+describe('MealService', () => {
+  let service: MealService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CollectionClient);
+    service = TestBed.inject(MealService);
   });
 
   it('should be created', () => {

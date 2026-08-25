@@ -4,32 +4,29 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../service/food-service';
 import { catchError, finalize, forkJoin, take, tap, throwError } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Collection, CollectionProperties } from '../../../model/collection.model';
-import { CollectionService } from '../../../service/collection-service';
-import {
-  AddFoodToCollectionRequest,
-  DeleteFoodFromCollectionRequest,
-} from '../../../dto/collection-request.dto';
+import { Dish, DishProperties } from '../../../model/dish.model';
+import { DishService } from '../../../service/dish-service';
+import { AddFoodToDishRequest, DeleteFoodFromDishRequest } from '../../../dto/dish-request.dto';
 import { FoodCard } from '../../foods/food-list/food-card/food-card';
 import { CollectionStats } from './collection-stats/collection-stats';
 import { CollectionFoodCard } from './collection-food-card/collection-food-card';
 
 @Component({
-  selector: 'app-collection-detail',
+  selector: 'app-dish-detail',
   imports: [FormsModule, ReactiveFormsModule, FoodCard, CollectionStats, CollectionFoodCard],
-  templateUrl: './collection-detail.html',
-  styleUrl: './collection-detail.css',
+  templateUrl: './dish-detail.html',
+  styleUrl: './dish-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionDetail {
-  collectionId = signal(0);
-  collection = signal<Collection>({ id: 0, name: '' });
+export class DishDetail {
+  dishId = signal(0);
+  dish = signal<Dish>({ id: 0, name: '' });
   isLoading = signal(true);
   hasError = signal(false);
   errorMessage = signal<string>('');
   deleted = signal<boolean>(false);
-  collectionFoods = signal<IngredientWithQuantity[]>([]);
-  collectionProperties = signal<CollectionProperties[]>([]);
+  dishFoods = signal<IngredientWithQuantity[]>([]);
+  dishProperties = signal<DishProperties[]>([]);
   foods = signal<Ingredient[]>([]);
   selectedFood = signal<Ingredient>({ id: 0, name: '', servingSize: 0, unit: '' });
 
@@ -39,36 +36,36 @@ export class CollectionDetail {
   protected router: Router = inject(Router);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly foodService: FoodService = inject(FoodService);
-  private readonly collectionService: CollectionService = inject(CollectionService);
+  private readonly dishService: DishService = inject(DishService);
 
   ngOnInit() {
-    this.collectionId.set(+this.route.snapshot.paramMap.get('id')!);
-    if (this.collectionId()) {
-      this.loadCollectionAndFoods();
+    this.dishId.set(+this.route.snapshot.paramMap.get('id')!);
+    if (this.dishId()) {
+      this.loadDishAndFoods();
     }
   }
 
   protected onBack(): void {
-    this.router.navigate(['/collections']).then(() => console.log('navigating to /collections'));
+    this.router.navigate(['/dishes']).then(() => console.log('navigating to /dishes'));
   }
 
   protected onFoodDelete(food: IngredientWithQuantity): void {
-    const foodToDelete: DeleteFoodFromCollectionRequest = {
+    const foodToDelete: DeleteFoodFromDishRequest = {
       ingredient_id: food.id,
     };
-    this.collectionService
-      .deleteFoodFromCollection(this.collectionId(), foodToDelete)
+    this.dishService
+      .deleteFoodFromDish(this.dishId(), foodToDelete)
       .pipe(
         finalize(() => {
-          this.loadCollectionAndFoods();
+          this.loadDishAndFoods();
         }),
       )
       .subscribe();
   }
 
-  protected onDelete(collection: Collection): void {
-    this.collectionService
-      .deleteCollectionById(collection.id)
+  protected onDelete(): void {
+    this.dishService
+      .deleteDishById(this.dish().id)
       .pipe(
         take(1),
         finalize(() => {
@@ -79,24 +76,24 @@ export class CollectionDetail {
       .subscribe();
   }
 
-  protected addFoodToCollection() {
+  protected addFoodToDish() {
     if (!this.foodId || !this.quantity) {
       return;
     }
-    const addFoodToCollectionRequest: AddFoodToCollectionRequest = {
+    const addFoodToDishRequest: AddFoodToDishRequest = {
       ingredient_id: this.foodId,
       quantity: this.quantity,
     };
 
-    this.collectionService
-      .addFoodToCollection(this.collectionId(), addFoodToCollectionRequest)
+    this.dishService
+      .addFoodToDish(this.dishId(), addFoodToDishRequest)
       .pipe(
         take(1),
         catchError(() => {
-          return throwError(() => new Error("Couldn't add food to the collection."));
+          return throwError(() => new Error("Couldn't add food to the dish."));
         }),
         finalize(() => {
-          this.updateCollectionFoods();
+          this.updateDishWithFoods();
           this.foodId = 0;
           this.quantity = 0;
           this.selectedFood.set({
@@ -131,16 +128,16 @@ export class CollectionDetail {
       });
   }
 
-  private loadCollectionAndFoods() {
+  private loadDishAndFoods() {
     forkJoin({
-      collectionWithFoods: this.collectionService.getFoodsByCollectionId(this.collectionId()),
+      dishWithFoods: this.dishService.getFoodsByDishId(this.dishId()),
       foods: this.foodService.getAllFoods(),
     })
       .pipe(
         take(1),
-        tap(({ collectionWithFoods }) => {
-          if (!collectionWithFoods.collection) {
-            throw Error('No collection found!');
+        tap(({ dishWithFoods }) => {
+          if (!dishWithFoods.dish) {
+            throw Error('No dish found!');
           }
         }),
         finalize(() => {
@@ -148,10 +145,10 @@ export class CollectionDetail {
         }),
       )
       .subscribe({
-        next: ({ collectionWithFoods, foods }) => {
-          this.collection.set(collectionWithFoods.collection);
-          this.collectionFoods.set(collectionWithFoods.foods);
-          this.collectionProperties.set(collectionWithFoods.collectionProperties);
+        next: ({ dishWithFoods, foods }) => {
+          this.dish.set(dishWithFoods.dish);
+          this.dishFoods.set(dishWithFoods.foods);
+          this.dishProperties.set(dishWithFoods.dishProperties);
           this.foods.set(foods);
         },
         error: (error: Error) => {
@@ -161,13 +158,13 @@ export class CollectionDetail {
       });
   }
 
-  private updateCollectionFoods() {
-    this.collectionService
-      .getFoodsByCollectionId(this.collectionId())
+  private updateDishWithFoods() {
+    this.dishService
+      .getFoodsByDishId(this.dishId())
       .pipe(take(1))
-      .subscribe((collectionWithFoods) => {
-        this.collectionFoods.set(collectionWithFoods.foods);
-        this.collectionProperties.set(collectionWithFoods.collectionProperties);
+      .subscribe((dishWithFoods) => {
+        this.dishFoods.set(dishWithFoods.foods);
+        this.dishProperties.set(dishWithFoods.dishProperties);
       });
   }
 }

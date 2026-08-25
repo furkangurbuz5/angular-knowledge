@@ -1,0 +1,34 @@
+<div class="collection-container">
+  <h2>Add a Dish</h2>
+
+  @if (dishes().length > 0) {
+    <div class="collection-list">
+      @for (dish of dishes(); track dish.id) {
+        <div class="collection-item">
+          <a [routerLink]="['/dish', dish.id]" class="collection-link">
+            {{ dish.name }}
+          </a>
+        </div>
+      }
+    </div>
+  } @else {
+    <p>No dishes added yet.</p>
+  }
+
+  <form class="collection-form" (ngSubmit)="addDish()">
+    <div>
+      <label for="add_dish">Dish</label>
+      <input
+        id="add_dish"
+        type="text"
+        [(ngModel)]="dish"
+        name="dish"
+        placeholder="Enter dish name"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="button primary">Add Dish</button>
+    </div>
+  </form>
+</div>

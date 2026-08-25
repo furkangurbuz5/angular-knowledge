@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DistributionChart } from './distribution-chart';
+import { DishList } from './dish-list';
 
-describe('DistributionChart', () => {
-  let component: DistributionChart;
-  let fixture: ComponentFixture<DistributionChart>;
+describe('Collections', () => {
+  let component: DishList;
+  let fixture: ComponentFixture<DishList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DistributionChart],
+      imports: [DishList],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DistributionChart);
+    fixture = TestBed.createComponent(DishList);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

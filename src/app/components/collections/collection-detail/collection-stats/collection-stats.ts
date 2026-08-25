@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { IngredientWithQuantity } from '../../../../model/ingredient.model';
-import { CollectionProperties } from '../../../../model/collection.model';
+import { DishProperties } from '../../../../model/dish.model';
 
 interface CollectionTotals {
   protein: number;
@@ -16,6 +16,6 @@ interface CollectionTotals {
   styleUrl: './collection-stats.css',
 })
 export class CollectionStats {
-  readonly collectionProperties = input.required<CollectionProperties[]>();
+  readonly collectionProperties = input.required<DishProperties[]>();
 
 }

@@ -5,8 +5,9 @@ import { PropertyList } from './components/foods/property/property-list.componen
 import { PropertyDetail } from './components/foods/property/property-detail/property-detail';
 import { FoodList } from './components/foods/food-list/food-list';
 import { FoodDetail } from './components/foods/food-list/food-detail/food-detail';
-import { CollectionDetail } from './components/collections/collection-detail/collection-detail';
-import { Collections } from './components/collections/collections';
+import { DishDetail } from './components/collections/collection-detail/dish-detail';
+import { DishList } from './components/collections/dish-list';
+import { MealList } from './components/meals/meal-list';
 
 export const routes: Routes = [
   {
@@ -25,9 +26,9 @@ export const routes: Routes = [
     title: 'Food details',
   },
   {
-    path: 'collection/:id',
-    component: CollectionDetail,
-    title: 'Collection details',
+    path: 'dish/:id',
+    component: DishDetail,
+    title: 'Dish details',
   },
   {
     path: 'dashboard',
@@ -45,9 +46,19 @@ export const routes: Routes = [
     title: 'Add a property',
   },
   {
-    path: 'collections',
-    component: Collections,
-    title: 'Collections',
+    path: 'dishes',
+    component: DishList,
+    title: 'Dishes',
+  },
+  {
+    path: 'meals',
+    component: MealList,
+    title: 'Meals',
+  },
+  {
+    path: 'meal/:id',
+    component: MealList,
+    title: 'Meal details',
   },
   {
     path: 'rxjsdemo',

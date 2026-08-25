@@ -1,21 +1,13 @@
-<div class="collection-food-card">
-  <div class="collection-food-card-body">
-    <div class="collection-food-field">
-      <span class="field-label">Name:</span>
+<div>
+  <div>
+    <div>
+      <span>Name: </span>
       <span class="field-value">{{ food().name }}</span>
     </div>
-    <div class="collection-food-field">
-      <span class="field-label">Serving size:</span>
-      <span class="field-value">{{ food().servingSize }}</span>
+    <div>
+      <span>Quantity: </span>
+      <span>{{ food().quantity }}</span>
     </div>
-    <div class="collection-food-field">
-      <span class="field-label">Unit:</span>
-      <span class="field-value">{{ food().unit }}</span>
-    </div>
-    <div class="collection-food-field">
-      <span class="field-label">Quantity:</span>
-      <span class="field-value">{{ food().quantity }}</span>
-    </div>
-    <button (click)="onDelete()" class="collection-food-card-button">X</button>
+    <button (click)="onDelete()">Delete</button>
   </div>
 </div>

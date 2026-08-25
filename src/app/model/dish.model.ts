@@ -1,17 +1,17 @@
 import { IngredientWithQuantity } from './ingredient.model';
 
-export interface Collection {
+export interface Dish {
   id: number;
   name: string;
 }
 
-export interface CollectionWithFoods {
-  collection: Collection;
+export interface DishWithFoods {
+  dish: Dish;
   foods: IngredientWithQuantity[];
-  collectionProperties: CollectionProperties[];
+  dishProperties: DishProperties[];
 }
 
-export interface CollectionProperties {
+export interface DishProperties {
   propertyId: number;
   propertyName: string;
   unit: string;

@@ -9,24 +9,8 @@
       type="text"
       [formControl]="searchControl"
       placeholder="Search by name or email..."
-      class="search-input">
-
-    @if (isSearching()) {
-      <div class="loading">Searching...</div>
-    } @else if (searchQuery() && searchResults().length === 0) {
-      <div class="no-results">No results found for "{{ searchQuery() }}".</div>
-    }
-
-    @if (searchResults().length > 0) {
-      <ul class="results-list">
-        @for (person of searchResults(); track person.id) {
-          <li>
-            <strong>{{ person.firstName }} {{ person.lastName }}</strong>
-            <span> ({{ person.email }})</span>
-          </li>
-        }
-      </ul>
-    }
+      class="search-input"
+    />
   </section>
 
   <!-- ⚠️ Memory Leak Example -->
@@ -36,11 +20,13 @@
       This counter increments every second via <code>setInterval</code>.
       <strong>We forgot to clean it up in `ngOnDestroy`!</strong>
     </p>
-    <p>Leaky Counter: <strong>{{ leakyCounter() }}</strong></p>
+    <p>
+      Leaky Counter: <strong>{{ leakyCounter() }}</strong>
+    </p>
     <button (click)="fixLeak()" class="button fix">Fix Leak</button>
     <p class="warning">
       ⚠️ This will keep running even after the component is destroyed.
-      <br>
+      <br />
       <strong>Memory leak!</strong> (Open browser dev tools → Memory tab to see)
     </p>
   </section>
@@ -49,10 +35,12 @@
   <section class="demo-section">
     <h3>✅ Fixed: RxJS with `takeUntil`</h3>
     <p>
-      This counter uses <code>interval</code> + <code>takeUntil</code>.
-      It stops automatically when the component is destroyed.
+      This counter uses <code>interval</code> + <code>takeUntil</code>. It stops automatically when
+      the component is destroyed.
     </p>
-    <p>Fixed Counter: <strong>{{ fixedCounter() }}</strong></p>
+    <p>
+      Fixed Counter: <strong>{{ fixedCounter() }}</strong>
+    </p>
     <p class="success">✅ Cleanup handled by `takeUntil(this.destroy$)`.</p>
   </section>
 
