@@ -8,7 +8,11 @@ import { Dish, DishWithFoods } from '../../../model/dish.model';
 import { FormsModule } from '@angular/forms';
 import { formatMealTime } from '../../../util/format-time';
 import { CollectionStats } from '../../collections/collection-detail/collection-stats/collection-stats';
-import { AddFoodToDishRequest, DeleteFoodFromDishRequest } from '../../../dto/dish-request.dto';
+import {
+  AddFoodToDishRequest,
+  DeleteFoodFromDishRequest,
+  UpdateFoodRequest,
+} from '../../../dto/dish-request.dto';
 import { Ingredient } from '../../../model/ingredient.model';
 import { FoodService } from '../../../service/food-service';
 
@@ -42,6 +46,7 @@ export class MealDetail {
   });
   protected foods = signal<Ingredient[]>([]);
   protected foodId: number = 0;
+  protected quantity: number = 0;
 
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
@@ -63,7 +68,7 @@ export class MealDetail {
       return;
     }
 
-    console.log("adding food")
+    console.log('adding food');
 
     const request: AddFoodToDishRequest = {
       ingredient_id: foodId,
@@ -80,8 +85,26 @@ export class MealDetail {
       .subscribe();
   }
 
-  protected updateFoodInDish(): void {
-    
+  protected updateFoodInDish(dishId: number, foodId: number, event: Event): void {
+    const eventTarget = event.target as HTMLInputElement;
+    const quantity = parseInt(eventTarget.value);
+
+    if (!quantity) {
+      return;
+    }
+
+    const request: UpdateFoodRequest = {
+      ingredientId: foodId,
+      quantity: quantity,
+    };
+    this.dishService
+      .updateFoodInDish(dishId, request)
+      .pipe(
+        finalize(() => {
+          this.getDish(dishId);
+        }),
+      )
+      .subscribe();
   }
 
   protected onDeleteFoodFromDish(dishId: number, foodId: number) {
@@ -110,6 +133,7 @@ export class MealDetail {
       .getFoodsByDishId(dishId)
       .pipe(
         tap((dish) => {
+          console.log(dish);
           this.dishWithFoods.set(dish);
         }),
       )

@@ -6,6 +6,7 @@ import {
   AddFoodToDishRequest,
   CreateDishRequest,
   DeleteFoodFromDishRequest,
+  UpdateFoodRequest,
 } from '../dto/dish-request.dto';
 import { mapIngredientWithQuantityResponseToIngredient } from '../dto/ingredients-response.dto';
 import { Dish, DishWithFoods } from '../model/dish.model';
@@ -74,5 +75,9 @@ export class DishService {
 
   deleteFoodFromDish(id: number, request: DeleteFoodFromDishRequest) {
     return this.dishClient.deleteFoodFromDish(id, request);
+  }
+
+  updateFoodInDish(id: number, request: UpdateFoodRequest) {
+    return this.dishClient.updateFoodInDish(id, request);
   }
 }

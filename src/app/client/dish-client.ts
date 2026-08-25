@@ -5,6 +5,7 @@ import {
   AddFoodToDishRequest,
   CreateDishRequest,
   DeleteFoodFromDishRequest,
+  UpdateFoodRequest,
 } from '../dto/dish-request.dto';
 
 @Injectable({
@@ -52,5 +53,9 @@ export class DishClient {
     return this.httpClient.delete<DishResponse>(`http://localhost:8080/api/v1/dishes/${id}/foods`, {
       body: request,
     });
+  }
+
+  updateFoodInDish(id: number, request: UpdateFoodRequest) {
+    return this.httpClient.put<void>(`http://localhost:8080/api/v1/dishes/${id}`, request);
   }
 }

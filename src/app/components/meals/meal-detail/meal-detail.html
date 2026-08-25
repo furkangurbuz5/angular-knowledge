@@ -24,7 +24,13 @@
         @for (food of dishWithFoods().foods; track food.id) {
           <tr>
             <td>{{ food.name }}</td>
-            <td><input [value]="food.quantity" /></td>
+            <td>
+              <input
+                type="number"
+                [value]="food.quantity"
+                (change)="updateFoodInDish(dishId, food.id, $event)"
+              />
+            </td>
             <td>{{ food.unit }}</td>
             <td><button (click)="onDeleteFoodFromDish(dishId, food.id)">Delete</button></td>
           </tr>
