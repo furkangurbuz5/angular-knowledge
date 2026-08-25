@@ -4,7 +4,7 @@
   @if (dishes().length > 0) {
     <div class="collection-list">
       @for (dish of dishes(); track dish.id) {
-        <div class="collection-item">
+        <div>
           <a [routerLink]="['/dish', dish.id]" class="collection-link">
             {{ dish.name }}
           </a>
@@ -17,7 +17,6 @@
 
   <form class="collection-form" (ngSubmit)="addDish()">
     <div>
-      <label for="add_dish">Dish</label>
       <input
         id="add_dish"
         type="text"

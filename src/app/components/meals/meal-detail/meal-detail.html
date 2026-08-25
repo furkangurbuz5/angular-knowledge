@@ -1,0 +1,67 @@
+@if (!isLoading()) {
+  <h4>{{ getMealTime(meal()) }}</h4>
+
+  <select [(ngModel)]="dishId" (change)="getDish(dishId)">
+    <option [value]="0">Select a dish..</option>
+    @for (dish of dishes(); track dish.id) {
+      <option [value]="dish.id">{{ dish.name }}</option>
+    }
+  </select>
+
+  @if (dishWithFoods()) {
+    <h5>{{ dishWithFoods().dish.name }}</h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (food of dishWithFoods().foods; track food.id) {
+          <tr>
+            <td>{{ food.name }}</td>
+            <td><input [value]="food.quantity" /></td>
+            <td>{{ food.unit }}</td>
+            <td><button (click)="onDeleteFoodFromDish(dishId, food.id)">Delete</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <select [(ngModel)]="foodId">
+      <option [ngValue]="0">Add a food...</option>
+      @for (food of foods(); track $index) {
+        <option [ngValue]="food.id">{{ food.name }}</option>
+      }
+    </select>
+    <button (click)="addFoodToDish(dishId, foodId)">Add</button>
+
+    <h5>Summary</h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Amount</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (property of dishWithFoods().dishProperties; track property.propertyId) {
+          <tr>
+            <td>{{ property.propertyName }}</td>
+            <td>{{ property.propertyAmount }}</td>
+            <td>{{ property.unit }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <button (click)="onAddDishToMeal()">Add Dish</button>
+}

@@ -3,7 +3,7 @@
 @if (meals().length > 0) {
   @for (meal of meals(); track meal.id) {
     <h4>
-      <a [routerLink]="['/meal', meal.id]">Meal {{ $index + 1 }} ({{ getMealTime(meal) }}) </a>
+      <a [routerLink]="['/meal', meal.id]">Meal on ({{ getMealTime(meal) }}) </a>
     </h4>
     <button (click)="onDelete(meal.id)">Delete meal</button>
 

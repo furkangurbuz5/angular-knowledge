@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DishClient } from '../client/dish-client';
 import { map, Observable } from 'rxjs';
-import {
-  mapDishPropertyResponseToDish,
-  mapDishResponseToDish,
-} from '../dto/dish-response.dto';
+import { mapDishPropertyResponseToDish, mapDishResponseToDish } from '../dto/dish-response.dto';
 import {
   AddFoodToDishRequest,
   CreateDishRequest,
@@ -20,15 +17,11 @@ export class DishService {
   private readonly dishClient: DishClient = inject(DishClient);
 
   getAllDishes(): Observable<Dish[]> {
-    return this.dishClient
-      .getAllDishes()
-      .pipe(map((dishes) => dishes.map(mapDishResponseToDish)));
+    return this.dishClient.getAllDishes().pipe(map((dishes) => dishes.map(mapDishResponseToDish)));
   }
 
   addDish(dish: CreateDishRequest): Observable<Dish> {
-    return this.dishClient
-      .addDish(dish)
-      .pipe(map((dish) => mapDishResponseToDish(dish)));
+    return this.dishClient.addDish(dish).pipe(map((dish) => mapDishResponseToDish(dish)));
   }
 
   getDishById(id: number): Observable<Dish> {
@@ -49,6 +42,24 @@ export class DishService {
             mapDishPropertyResponseToDish(property),
           ),
         };
+      }),
+    );
+  }
+
+  getAllDishesWithFoods(): Observable<DishWithFoods[]> {
+    return this.dishClient.getAllDishesWithFoods().pipe(
+      map((dishWithFoodsResponse): DishWithFoods[] => {
+        return dishWithFoodsResponse.map((response) => {
+          return {
+            dish: mapDishResponseToDish(response.dish),
+            foods: response.ingredients.map((food) =>
+              mapIngredientWithQuantityResponseToIngredient(food),
+            ),
+            dishProperties: response.dishProperties.map((property) =>
+              mapDishPropertyResponseToDish(property),
+            ),
+          };
+        });
       }),
     );
   }

@@ -22,6 +22,12 @@ export class MealService {
       .pipe(map((mealResponse) => mealResponse.map(mapMealResponseToMeal)));
   }
 
+  getMealById(mealId: number): Observable<Meal> {
+    return this.mealClient
+      .getMealById(mealId)
+      .pipe(map((mealResponse) => mapMealResponseToMeal(mealResponse)));
+  }
+
   deleteMealById(mealId: number): Observable<void> {
     return this.mealClient.deleteMealById(mealId);
   }

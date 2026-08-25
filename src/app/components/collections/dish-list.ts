@@ -26,12 +26,12 @@ export class DishList {
       return;
     }
 
-    const collection: CreateDishRequest = {
+    const dish: CreateDishRequest = {
       name: this.dish,
     };
 
     this.dishService
-      .addDish(collection)
+      .addDish(dish)
       .pipe(
         take(1),
         finalize(() => {

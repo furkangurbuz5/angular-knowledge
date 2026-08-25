@@ -18,16 +18,11 @@ export class DishClient {
   }
 
   addDish(dish: CreateDishRequest) {
-    return this.httpClient.post<DishResponse>(
-      'http://localhost:8080/api/v1/dishes',
-      dish,
-    );
+    return this.httpClient.post<DishResponse>('http://localhost:8080/api/v1/dishes', dish);
   }
 
   getDishById(id: number) {
-    return this.httpClient.get<DishResponse>(
-      `http://localhost:8080/api/v1/dishes/${id}`,
-    );
+    return this.httpClient.get<DishResponse>(`http://localhost:8080/api/v1/dishes/${id}`);
   }
 
   getFoodsByDishId(id: number) {
@@ -36,10 +31,14 @@ export class DishClient {
     );
   }
 
-  deleteDishById(id: number) {
-    return this.httpClient.delete<void>(
-      `http://localhost:8080/api/v1/dishes/${id}`,
+  getAllDishesWithFoods() {
+    return this.httpClient.get<DishWithFoodsResponse[]>(
+      `http://localhost:8080/api/v1/dishes/foods`,
     );
+  }
+
+  deleteDishById(id: number) {
+    return this.httpClient.delete<void>(`http://localhost:8080/api/v1/dishes/${id}`);
   }
 
   addFoodToDish(id: number, request: AddFoodToDishRequest) {
@@ -50,9 +49,8 @@ export class DishClient {
   }
 
   deleteFoodFromDish(id: number, request: DeleteFoodFromDishRequest) {
-    return this.httpClient.delete<DishResponse>(
-      `http://localhost:8080/api/v1/dishes/${id}/foods`,
-      { body: request },
-    );
+    return this.httpClient.delete<DishResponse>(`http://localhost:8080/api/v1/dishes/${id}/foods`, {
+      body: request,
+    });
   }
 }

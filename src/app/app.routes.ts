@@ -8,6 +8,7 @@ import { FoodDetail } from './components/foods/food-list/food-detail/food-detail
 import { DishDetail } from './components/collections/collection-detail/dish-detail';
 import { DishList } from './components/collections/dish-list';
 import { MealList } from './components/meals/meal-list';
+import { MealDetail } from './components/meals/meal-detail/meal-detail';
 
 export const routes: Routes = [
   {
@@ -57,7 +58,7 @@ export const routes: Routes = [
   },
   {
     path: 'meal/:id',
-    component: MealList,
+    component: MealDetail,
     title: 'Meal details',
   },
   {

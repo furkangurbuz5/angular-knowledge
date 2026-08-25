@@ -3,6 +3,7 @@ import { MealService } from '../../service/meal-service';
 import { Meal } from '../../model/meal.model';
 import { finalize, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import { formatMealTime } from '../../util/format-time';
 
 @Component({
   selector: 'app-meal-list',
@@ -52,15 +53,6 @@ export class MealList implements OnInit {
   }
 
   protected getMealTime(meal: Meal): string {
-    return this.formatMealTime(meal.timestamp, meal.tzOffsetTime);
-  }
-
-  private formatMealTime(timestamp: number, tzOffsetMin: number): string {
-    const utcMs = timestamp * 1000;
-    const offsetMs = tzOffsetMin * 60 * 1000;
-
-    const localDate = new Date(utcMs + offsetMs);
-
-    return localDate.toUTCString().slice(0, -4);
+    return formatMealTime(meal.timestamp, meal.tzOffsetTime);
   }
 }

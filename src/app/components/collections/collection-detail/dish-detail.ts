@@ -33,7 +33,7 @@ export class DishDetail {
   foodId: number = 0;
   quantity: number = 0;
 
-  protected router: Router = inject(Router);
+  private readonly router: Router = inject(Router);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly foodService: FoodService = inject(FoodService);
   private readonly dishService: DishService = inject(DishService);
