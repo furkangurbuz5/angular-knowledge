@@ -81,7 +81,7 @@ export class MealDetail {
   }
 
   protected updateFoodInDish(): void {
-    this.foodService.
+    
   }
 
   protected onDeleteFoodFromDish(dishId: number, foodId: number) {
