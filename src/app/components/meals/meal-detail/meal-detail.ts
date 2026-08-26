@@ -7,7 +7,6 @@ import { DishService } from '../../../service/dish-service';
 import { Dish, DishWithFoods } from '../../../model/dish.model';
 import { FormsModule } from '@angular/forms';
 import { formatMealTime } from '../../../util/format-time';
-import { CollectionStats } from '../../collections/collection-detail/collection-stats/collection-stats';
 import {
   AddFoodToDishRequest,
   DeleteFoodFromDishRequest,
@@ -15,10 +14,11 @@ import {
 } from '../../../dto/dish-request.dto';
 import { Ingredient } from '../../../model/ingredient.model';
 import { FoodService } from '../../../service/food-service';
+import { MealTable } from '../meal-table/meal-table';
 
 @Component({
   selector: 'app-meal-detail',
-  imports: [FormsModule, CollectionStats],
+  imports: [FormsModule, MealTable],
   templateUrl: './meal-detail.html',
   styleUrl: './meal-detail.css',
 })
@@ -32,7 +32,10 @@ export class MealDetail {
   protected readonly meal: WritableSignal<Meal> = signal<Meal>({
     id: 0,
     timestamp: 0,
-    tzOffsetTime: 0,
+    tzOffsetMin: 0,
+    dishes: [],
+    summaryComplete: false,
+    summary: []
   });
   protected readonly dishes: WritableSignal<Dish[]> = signal([]);
   protected dishId: number = 0;
@@ -46,7 +49,8 @@ export class MealDetail {
   });
   protected foods = signal<Ingredient[]>([]);
   protected foodId: number = 0;
-  protected quantity: number = 0;
+
+  protected readonly mealDishes: WritableSignal<DishWithFoods[]> = signal([]);
 
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
@@ -60,7 +64,7 @@ export class MealDetail {
   }
 
   protected getMealTime(meal: Meal): string {
-    return formatMealTime(meal.timestamp, meal.tzOffsetTime);
+    return formatMealTime(meal.timestamp, meal.tzOffsetMin);
   }
 
   protected addFoodToDish(dishId: number, foodId: number): void {
@@ -129,12 +133,35 @@ export class MealDetail {
   }
 
   protected getDish(dishId: number) {
+    if (dishId === 0) {
+      this.dishWithFoods.set({
+        dish: {
+          id: 0,
+          name: '',
+        },
+        foods: [],
+        dishProperties: [],
+      });
+
+      return;
+    }
     this.dishService
       .getFoodsByDishId(dishId)
       .pipe(
         tap((dish) => {
           console.log(dish);
           this.dishWithFoods.set(dish);
+        }),
+      )
+      .subscribe();
+  }
+
+  protected onDeleteMeal(mealId: number) {
+    this.mealService
+      .deleteMealById(mealId)
+      .pipe(
+        finalize(() => {
+          this.router.navigate(['/meals']).then(() => console.log('navigating to /meals'));
         }),
       )
       .subscribe();

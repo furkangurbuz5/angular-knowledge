@@ -1,0 +1,36 @@
+<h5>{{ dish().dish.name }}</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (food of dish().foods; track food.id) {
+      <tr>
+        <td>{{ food.name }}</td>
+        <td>
+          <input
+            type="number"
+            [value]="food.quantity"
+            (change)="updateFoodInDish(dish().dish.id, food.id, $event)"
+          />
+        </td>
+        <td>{{ food.unit }}</td>
+        <td><button (click)="onDeleteFoodFromDish(dish().dish.id, food.id)">Delete</button></td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<select [(ngModel)]="foodId">
+  <option [ngValue]="0">Add a food...</option>
+  @for (food of foods(); track $index) {
+    <option [ngValue]="food.id">{{ food.name }}</option>
+  }
+</select>
+<button (click)="addFoodToDish(dish().dish.id, foodId)">Add</button>

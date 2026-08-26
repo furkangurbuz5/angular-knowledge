@@ -1,4 +1,5 @@
 export interface CreatePropertyRequest {
   name: string;
-  unit_id: number;
+  unitId: number;
+  parentId: number;
 }

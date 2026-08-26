@@ -1,4 +1,4 @@
-import { IngredientWithQuantity } from './ingredient.model';
+import { IngredientWithQuantity, MealDishIngredient } from './ingredient.model';
 
 export interface Dish {
   id: number;
@@ -16,4 +16,11 @@ export interface DishProperties {
   propertyName: string;
   unit: string;
   propertyAmount: number;
+}
+
+export interface MealDish {
+  id: number;
+  mealId: number;
+  dishId: number;
+  ingredients: MealDishIngredient[];
 }

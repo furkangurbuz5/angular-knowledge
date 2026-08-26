@@ -4,6 +4,11 @@ export interface Property {
   unit: string;
 }
 
+export interface PropertySummary {
+  propertyId: number;
+  value: number;
+}
+
 export interface PropertyWithValue {
   id: number;
   name: string;

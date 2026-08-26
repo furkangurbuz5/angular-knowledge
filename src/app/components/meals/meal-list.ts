@@ -53,6 +53,6 @@ export class MealList implements OnInit {
   }
 
   protected getMealTime(meal: Meal): string {
-    return formatMealTime(meal.timestamp, meal.tzOffsetTime);
+    return formatMealTime(meal.timestamp, meal.tzOffsetMin);
   }
 }

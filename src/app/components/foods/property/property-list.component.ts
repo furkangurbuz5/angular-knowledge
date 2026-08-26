@@ -31,7 +31,8 @@ export class PropertyList {
     this.propertyService
       .addProperty({
         name: this.property,
-        unit_id: unitId,
+        unitId: unitId,
+        parentId: 0
       })
       .pipe(
         take(1),
