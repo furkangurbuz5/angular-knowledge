@@ -8,7 +8,7 @@
     }
   </select>
 
-  @if (dishWithFoods()) {
+  @if (dishWithFoods().id != 0) {
     <app-meal-table
       [dish]="dishWithFoods()"
       [foods]="foods()"
@@ -18,27 +18,42 @@
     ></app-meal-table>
   }
 
+  @if (mealDishes().length > 0) {
+    @for (mealDish of mealDishes(); track mealDish.id) {
+      <app-meal-dish-table
+        [mealDish]="mealDish"
+        [foods]="foods()"
+        (update)="updateFoodInDish($event.dishId, $event.foodId, $event.event)"
+        (delete)="onDeleteFoodFromDish($event.dishId, $event.foodId)"
+        (add)="onAddDishToMeal(mealDish.mealId, $event.dishId)"
+      ></app-meal-dish-table>
+    }
+  }
+
+  <div>
+<!--    <button (click)="onAddDishToMeal()">Add Dish</button>-->
+  </div>
+
   <h5>Summary</h5>
 
   <table>
     <thead>
-      <tr>
-        <th>Property</th>
-        <th>Amount</th>
-        <th>Unit</th>
-      </tr>
+    <tr>
+      <th>Property</th>
+      <th>Amount</th>
+      <th>Unit</th>
+    </tr>
     </thead>
 
-    <tbody>
-      @for (property of dishWithFoods().dishProperties; track property.propertyId) {
-        <tr>
-          <td>{{ property.propertyName }}</td>
-          <td>{{ property.propertyAmount }}</td>
-          <td>{{ property.unit }}</td>
-        </tr>
-      }
-    </tbody>
+    <!--    <tbody>-->
+    <!--      @for (property of dishWithFoods().dishProperties; track property.propertyId) {-->
+    <!--        <tr>-->
+    <!--          <td>{{ property.propertyName }}</td>-->
+    <!--          <td>{{ property.propertyAmount }}</td>-->
+    <!--          <td>{{ property.unit }}</td>-->
+    <!--        </tr>-->
+    <!--      }-->
+    <!--    </tbody>-->
   </table>
 
-  <button (click)="onAddDishToMeal()">Add Dish</button>
 }

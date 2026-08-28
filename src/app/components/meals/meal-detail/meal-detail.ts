@@ -1,10 +1,9 @@
-import { Component, inject, input, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Meal } from '../../../model/meal.model';
-import { MealService } from '../../../service/meal-service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, tap } from 'rxjs';
 import { DishService } from '../../../service/dish-service';
-import { Dish, DishWithFoods } from '../../../model/dish.model';
+import { Dish, DishWithFoods, MealDish } from '../../../model/dish.model';
 import { FormsModule } from '@angular/forms';
 import { formatMealTime } from '../../../util/format-time';
 import {
@@ -15,15 +14,18 @@ import {
 import { Ingredient } from '../../../model/ingredient.model';
 import { FoodService } from '../../../service/food-service';
 import { MealTable } from '../meal-table/meal-table';
+import { MealClient } from '../../../client/meal-client';
+import { MealDishTable } from '../meal-table/meal-dish-table';
+import { AddDishToMealRequest } from '../../../dto/meal-request.dto';
 
 @Component({
   selector: 'app-meal-detail',
-  imports: [FormsModule, MealTable],
+  imports: [FormsModule, MealTable, MealDishTable],
   templateUrl: './meal-detail.html',
   styleUrl: './meal-detail.css',
 })
 export class MealDetail {
-  private readonly mealService: MealService = inject(MealService);
+  private readonly mealClient: MealClient = inject(MealClient);
   private readonly dishService: DishService = inject(DishService);
   private readonly foodService: FoodService = inject(FoodService);
   private readonly router: Router = inject(Router);
@@ -35,22 +37,19 @@ export class MealDetail {
     tzOffsetMin: 0,
     dishes: [],
     summaryComplete: false,
-    summary: []
+    summary: [],
   });
   protected readonly dishes: WritableSignal<Dish[]> = signal([]);
   protected dishId: number = 0;
   protected dishWithFoods: WritableSignal<DishWithFoods> = signal({
-    dish: {
-      id: 0,
-      name: '',
-    },
+    id: 0,
+    name: '',
     foods: [],
     dishProperties: [],
   });
   protected foods = signal<Ingredient[]>([]);
-  protected foodId: number = 0;
 
-  protected readonly mealDishes: WritableSignal<DishWithFoods[]> = signal([]);
+  protected readonly mealDishes: WritableSignal<MealDish[]> = signal([]);
 
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
@@ -71,8 +70,6 @@ export class MealDetail {
     if (foodId === 0) {
       return;
     }
-
-    console.log('adding food');
 
     const request: AddFoodToDishRequest = {
       ingredient_id: foodId,
@@ -126,19 +123,23 @@ export class MealDetail {
       .subscribe();
   }
 
-  protected onAddDishToMeal() {
+  protected onAddDishToMeal(mealId: number, dishId: number) {
     if (!this.dishId) {
       return;
     }
+
+    const request: AddDishToMealRequest = {
+      dishId: dishId,
+    };
+
+    this.mealClient.addDishToMeal(mealId, request).subscribe();
   }
 
   protected getDish(dishId: number) {
     if (dishId === 0) {
       this.dishWithFoods.set({
-        dish: {
-          id: 0,
-          name: '',
-        },
+        id: 0,
+        name: '',
         foods: [],
         dishProperties: [],
       });
@@ -157,7 +158,7 @@ export class MealDetail {
   }
 
   protected onDeleteMeal(mealId: number) {
-    this.mealService
+    this.mealClient
       .deleteMealById(mealId)
       .pipe(
         finalize(() => {
@@ -189,7 +190,7 @@ export class MealDetail {
   }
 
   private fetchMeal(mealId: number): void {
-    this.mealService
+    this.mealClient
       .getMealById(mealId)
       .pipe(
         tap((meal) => {

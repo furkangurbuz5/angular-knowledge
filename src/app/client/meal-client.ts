@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MealResponse } from '../dto/meal-response.dto';
+import { map, Observable } from 'rxjs';
 import { Meal } from '../model/meal.model';
 import { MealDish } from '../model/dish.model';
 import {

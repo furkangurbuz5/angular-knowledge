@@ -1,12 +1,12 @@
-<h5>{{ dish().dish.name }}</h5>
+<h5>{{ dish().name }}</h5>
 
 <table>
   <thead>
-    <tr>
-      <th>Food</th>
-      <th>Quantity</th>
-      <th>Unit</th>
-    </tr>
+  <tr>
+    <th>Food</th>
+    <th>Quantity</th>
+    <th>Unit</th>
+  </tr>
   </thead>
 
   <tbody>
@@ -17,11 +17,13 @@
           <input
             type="number"
             [value]="food.quantity"
-            (change)="updateFoodInDish(dish().dish.id, food.id, $event)"
+            (change)="updateFoodInDish(dish().id, food.id, $event)"
           />
         </td>
         <td>{{ food.unit }}</td>
-        <td><button (click)="onDeleteFoodFromDish(dish().dish.id, food.id)">Delete</button></td>
+        <td>
+          <button (click)="onDeleteFoodFromDish(dish().id, food.id)">Delete</button>
+        </td>
       </tr>
     }
   </tbody>
@@ -33,4 +35,4 @@
     <option [ngValue]="food.id">{{ food.name }}</option>
   }
 </select>
-<button (click)="addFoodToDish(dish().dish.id, foodId)">Add</button>
+<button (click)="addFoodToDish(dish().id, foodId)">Add</button>

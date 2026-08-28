@@ -14,7 +14,8 @@ export function mapDishResponseToDish(response: DishResponse): Dish {
 }
 
 export interface DishWithFoodsResponse {
-  dish: DishResponse;
+  id: number;
+  name: string;
   ingredients: IngredientWithQuantityResponse[];
   dishProperties: DishPropertiesResponse[];
 }

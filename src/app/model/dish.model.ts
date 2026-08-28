@@ -6,7 +6,8 @@ export interface Dish {
 }
 
 export interface DishWithFoods {
-  dish: Dish;
+  id: number,
+  name: string;
   foods: IngredientWithQuantity[];
   dishProperties: DishProperties[];
 }

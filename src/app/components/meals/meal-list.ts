@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { MealService } from '../../service/meal-service';
 import { Meal } from '../../model/meal.model';
 import { finalize, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { formatMealTime } from '../../util/format-time';
+import { MealClient } from '../../client/meal-client';
 
 @Component({
   selector: 'app-meal-list',
@@ -13,7 +13,7 @@ import { formatMealTime } from '../../util/format-time';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MealList implements OnInit {
-  private readonly mealService: MealService = inject(MealService);
+  private readonly mealClient: MealClient = inject(MealClient);
   protected readonly meals = signal<Meal[]>([]);
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class MealList implements OnInit {
 
   private fetchMeals(): void {
     console.log('Fetching meals...');
-    this.mealService
+    this.mealClient
       .getMeals()
       .pipe(tap((meals) => this.meals.set(meals)))
       .subscribe();
@@ -30,7 +30,7 @@ export class MealList implements OnInit {
 
   protected onDelete(mealId: number) {
     console.log('Deleting meal with id: ', mealId);
-    this.mealService
+    this.mealClient
       .deleteMealById(mealId)
       .pipe(
         finalize(() => {
@@ -42,7 +42,7 @@ export class MealList implements OnInit {
 
   protected onAddMeal() {
     console.log('Adding meal..');
-    this.mealService
+    this.mealClient
       .addMeal()
       .pipe(
         finalize(() => {

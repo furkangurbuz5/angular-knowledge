@@ -136,7 +136,7 @@ export class DishDetail {
       .pipe(
         take(1),
         tap(({ dishWithFoods }) => {
-          if (!dishWithFoods.dish) {
+          if (!dishWithFoods.id) {
             throw Error('No dish found!');
           }
         }),
@@ -146,7 +146,7 @@ export class DishDetail {
       )
       .subscribe({
         next: ({ dishWithFoods, foods }) => {
-          this.dish.set(dishWithFoods.dish);
+          this.dish.set({ id: dishWithFoods.id, name: dishWithFoods.name });
           this.dishFoods.set(dishWithFoods.foods);
           this.dishProperties.set(dishWithFoods.dishProperties);
           this.foods.set(foods);

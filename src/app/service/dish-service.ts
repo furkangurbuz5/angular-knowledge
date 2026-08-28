@@ -35,7 +35,8 @@ export class DishService {
     return this.dishClient.getFoodsByDishId(id).pipe(
       map((dishWithFoodsResponse): DishWithFoods => {
         return {
-          dish: mapDishResponseToDish(dishWithFoodsResponse.dish),
+          id: dishWithFoodsResponse.id,
+          name: dishWithFoodsResponse.name,
           foods: dishWithFoodsResponse.ingredients.map((food) =>
             mapIngredientWithQuantityResponseToIngredient(food),
           ),
@@ -52,7 +53,8 @@ export class DishService {
       map((dishWithFoodsResponse): DishWithFoods[] => {
         return dishWithFoodsResponse.map((response) => {
           return {
-            dish: mapDishResponseToDish(response.dish),
+            id: response.id,
+            name: response.name,
             foods: response.ingredients.map((food) =>
               mapIngredientWithQuantityResponseToIngredient(food),
             ),
