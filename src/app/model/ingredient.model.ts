@@ -33,5 +33,5 @@ export interface MealDishIngredient {
   mealDishId: number;
   ingredientId: number;
   quantity: number;
-  unit_id: number;
+  unitId: number;
 }

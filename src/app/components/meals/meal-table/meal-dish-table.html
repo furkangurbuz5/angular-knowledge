@@ -20,7 +20,7 @@
             (change)="updateIngredient(mealDish().id, ingredient.id, $event)"
           />
         </td>
-        <td> //FIXME: Unit</td>
+        <td>{{ mapUnitIdToOption(ingredient.unitId) }}</td>
         <td>
           <button (click)="deleteIngredient(mealDish().id, ingredient.id)">Delete</button>
         </td>

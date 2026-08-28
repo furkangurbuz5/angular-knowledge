@@ -28,11 +28,6 @@ import {
   styleUrl: './meal-detail.css',
 })
 export class MealDetail {
-  private readonly mealClient: MealClient = inject(MealClient);
-  private readonly dishService: DishService = inject(DishService);
-  private readonly foodService: FoodService = inject(FoodService);
-  private readonly router: Router = inject(Router);
-  private readonly route: ActivatedRoute = inject(ActivatedRoute);
   protected readonly mealId: WritableSignal<number> = signal<number>(0);
   protected readonly meal: WritableSignal<Meal> = signal<Meal>({
     id: 0,
@@ -51,10 +46,13 @@ export class MealDetail {
     dishProperties: [],
   });
   protected foods = signal<Ingredient[]>([]);
-
   protected readonly mealDishes: WritableSignal<MealDish[]> = signal([]);
-
   protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  private readonly mealClient: MealClient = inject(MealClient);
+  private readonly dishService: DishService = inject(DishService);
+  private readonly foodService: FoodService = inject(FoodService);
+  private readonly router: Router = inject(Router);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.getMealId();
@@ -135,8 +133,17 @@ export class MealDetail {
       dishId: dishId,
     };
 
-    this.mealClient.addDishToMeal(mealId, request).subscribe();
+    this.mealClient
+      .addDishToMeal(mealId, request)
+      .pipe(
+        tap(() => {
+          this.fetchMeal(this.meal().id);
+        }),
+      )
+      .subscribe();
   }
+
+  protected onAddMealDish(mealId: number) {}
 
   protected onAddIngredientToMealDish(mealDishId: number, foodId: number) {
     const request: AddIngredientToMealDishRequest = {
