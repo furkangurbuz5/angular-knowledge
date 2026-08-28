@@ -20,7 +20,7 @@ export class MealDishTable {
   protected dishId: number = 0;
   protected foodId: number = 0;
 
-  protected updateFoodInDish(dishId: number, foodId: number, event: Event) {
+  protected updateIngredient(dishId: number, foodId: number, event: Event) {
     this.update.emit({
       dishId: dishId,
       foodId: foodId,
@@ -28,14 +28,14 @@ export class MealDishTable {
     });
   }
 
-  protected onDeleteFoodFromDish(dishId: number, foodId: number) {
+  protected deleteIngredient(dishId: number, foodId: number) {
     this.delete.emit({
       dishId,
       foodId,
     });
   }
 
-  protected addFoodToDish(dishId: number, foodId: number) {
+  protected addIngredient(dishId: number, foodId: number) {
     this.add.emit({
       dishId,
       foodId,

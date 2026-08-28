@@ -21,6 +21,7 @@ export interface DishProperties {
 
 export interface MealDish {
   id: number;
+  name: string;
   mealId: number;
   dishId: number;
   ingredients: MealDishIngredient[];

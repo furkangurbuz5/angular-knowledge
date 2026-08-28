@@ -1,3 +1,5 @@
+<h6>{{ mealDish().name }}</h6>
+
 <table>
   <thead>
   <tr>
@@ -10,17 +12,17 @@
   <tbody>
     @for (ingredient of mealDish().ingredients; track ingredient.id) {
       <tr>
-        <td>{{ ingredient.ingredientId }}</td>
+        <td>{{ ingredient.name }}</td>
         <td>
           <input
             type="number"
             [value]="ingredient.quantity"
-            (change)="updateFoodInDish(mealDish().id, ingredient.id, $event)"
+            (change)="updateIngredient(mealDish().id, ingredient.id, $event)"
           />
         </td>
-        <td>{{ mapUnitIdToOption(ingredient.unit_id).toString() }}</td>
+        <td> //FIXME: Unit</td>
         <td>
-          <button (click)="onDeleteFoodFromDish(mealDish().id, ingredient.id)">Delete</button>
+          <button (click)="deleteIngredient(mealDish().id, ingredient.id)">Delete</button>
         </td>
       </tr>
     }
@@ -33,4 +35,5 @@
     <option [ngValue]="food.id">{{ food.name }}</option>
   }
 </select>
-<button (click)="addFoodToDish(mealDish().id, foodId)">Add</button>
+<button (click)="addIngredient(mealDish().id, foodId)">Add</button>
+<hr>

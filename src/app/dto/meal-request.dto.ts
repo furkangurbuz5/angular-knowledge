@@ -4,7 +4,6 @@ export interface AddDishToMealRequest {
 
 export interface AddIngredientToMealDishRequest {
   ingredientId: number;
-  unitId: number;
 }
 
 export interface ModifyIngredientInMealDishRequest {

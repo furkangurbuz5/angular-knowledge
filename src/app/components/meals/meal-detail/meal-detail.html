@@ -18,21 +18,23 @@
     ></app-meal-table>
   }
 
+  <div>
+    <button (click)="onAddDishToMeal(meal().id, dishWithFoods().id)">Add Dish</button>
+  </div>
+
+
+  <h5>Meal dishes</h5>
   @if (mealDishes().length > 0) {
     @for (mealDish of mealDishes(); track mealDish.id) {
       <app-meal-dish-table
         [mealDish]="mealDish"
         [foods]="foods()"
-        (update)="updateFoodInDish($event.dishId, $event.foodId, $event.event)"
-        (delete)="onDeleteFoodFromDish($event.dishId, $event.foodId)"
-        (add)="onAddDishToMeal(mealDish.mealId, $event.dishId)"
+        (update)="onUpdateIngredientInMealDish()"
+        (delete)="onDeleteIngredientFromMealDish()"
+        (add)="onAddIngredientToMealDish($event.dishId, $event.foodId)"
       ></app-meal-dish-table>
     }
   }
-
-  <div>
-<!--    <button (click)="onAddDishToMeal()">Add Dish</button>-->
-  </div>
 
   <h5>Summary</h5>
 

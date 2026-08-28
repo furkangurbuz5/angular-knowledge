@@ -16,7 +16,10 @@ import { FoodService } from '../../../service/food-service';
 import { MealTable } from '../meal-table/meal-table';
 import { MealClient } from '../../../client/meal-client';
 import { MealDishTable } from '../meal-table/meal-dish-table';
-import { AddDishToMealRequest } from '../../../dto/meal-request.dto';
+import {
+  AddDishToMealRequest,
+  AddIngredientToMealDishRequest,
+} from '../../../dto/meal-request.dto';
 
 @Component({
   selector: 'app-meal-detail',
@@ -123,7 +126,7 @@ export class MealDetail {
       .subscribe();
   }
 
-  protected onAddDishToMeal(mealId: number, dishId: number) {
+  protected onAddDishToMeal(mealId: number, dishId: number): void {
     if (!this.dishId) {
       return;
     }
@@ -134,6 +137,24 @@ export class MealDetail {
 
     this.mealClient.addDishToMeal(mealId, request).subscribe();
   }
+
+  protected onAddIngredientToMealDish(mealDishId: number, foodId: number) {
+    const request: AddIngredientToMealDishRequest = {
+      ingredientId: foodId,
+    };
+    this.mealClient
+      .addMealDishIngredient(mealDishId, request)
+      .pipe(
+        tap(() => {
+          this.fetchMeal(this.meal().id);
+        }),
+      )
+      .subscribe();
+  }
+
+  protected onUpdateIngredientInMealDish() {}
+
+  protected onDeleteIngredientFromMealDish() {}
 
   protected getDish(dishId: number) {
     if (dishId === 0) {
@@ -195,6 +216,7 @@ export class MealDetail {
       .pipe(
         tap((meal) => {
           this.meal.set(meal);
+          this.mealDishes.set(meal.dishes);
         }),
         finalize(() => {
           this.isLoading.set(false);

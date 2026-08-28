@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Meal } from '../model/meal.model';
 import { MealDish } from '../model/dish.model';
 import {
@@ -35,7 +35,11 @@ export class MealClient {
   }
 
   getMealById(mealId: number): Observable<Meal> {
-    return this.httpClient.get<Meal>(`http://localhost:8080/api/v1/meals/${mealId}`);
+    return this.httpClient.get<Meal>(`http://localhost:8080/api/v1/meals/${mealId}`).pipe(
+      tap((meal) => {
+        console.log(meal);
+      }),
+    );
   }
 
   deleteMealById(mealId: number): Observable<void> {
@@ -43,11 +47,11 @@ export class MealClient {
   }
 
   addMealDishIngredient(
-    mealId: number,
+    mealDishId: number,
     request: AddIngredientToMealDishRequest,
   ): Observable<MealDishIngredient> {
     return this.httpClient.post<MealDishIngredient>(
-      `http://localhost:8080/api/v1/meals/dish/ingredient/${mealId}`,
+      `http://localhost:8080/api/v1/meals/dish/${mealDishId}/ingredient`,
       {
         ingredientId: request.ingredientId,
       },
