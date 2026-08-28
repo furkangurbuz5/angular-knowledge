@@ -29,6 +29,7 @@ export interface IngredientWithProperties {
 
 export interface MealDishIngredient {
   id: number;
+  name: string;
   mealDishId: number;
   ingredientId: number;
   quantity: number;
