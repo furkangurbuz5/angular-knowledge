@@ -84,4 +84,14 @@ export class MealClient {
       { params: params },
     );
   }
+
+  copyDishToMealDish(mealId: number, fromDishId: number): Observable<MealDishIngredient> {
+    const params = new HttpParams().set('fromDishId', fromDishId);
+
+    return this.httpClient.post<MealDishIngredient>(
+      `http://localhost:8080/api/v1/meals/${mealId}/dish/copy`,
+      {},
+      { params: params },
+    );
+  }
 }
