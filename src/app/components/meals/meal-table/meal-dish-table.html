@@ -31,10 +31,10 @@
   </tbody>
 </table>
 
-<select [(ngModel)]="foodId">
+<select [(ngModel)]="ingredientId">
   <option [ngValue]="0">Add a food...</option>
   @for (food of foods(); track $index) {
     <option [ngValue]="food.id">{{ food.name }}</option>
   }
 </select>
-<button (click)="addIngredient(mealDish().id, foodId)">Add</button>
+<button (click)="addIngredient(mealDish().id, ingredientId)">Add</button>

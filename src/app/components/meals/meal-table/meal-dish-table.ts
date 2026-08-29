@@ -17,8 +17,8 @@ export class MealDishTable {
   delete = output<{ mealDishId: number; foodId: number }>();
   add = output<{ mealDishId: number; foodId: number }>();
 
-  protected dishId: number = 0;
-  protected foodId: number = 0;
+  protected ingredientId: number = 0;
+  protected readonly mapUnitIdToOption = mapUnitIdToOption;
 
   protected updateIngredient(dishId: number, foodId: number, event: Event) {
     this.update.emit({
@@ -40,7 +40,6 @@ export class MealDishTable {
       mealDishId: dishId,
       foodId,
     });
+    this.ingredientId = 0;
   }
-
-  protected readonly mapUnitIdToOption = mapUnitIdToOption;
 }
