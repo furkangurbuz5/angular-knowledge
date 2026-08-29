@@ -13,16 +13,16 @@ import { mapUnitIdToOption } from '../../../util/unit-mapper';
 export class MealDishTable {
   mealDish: InputSignal<MealDish> = input.required<MealDish>();
   foods: InputSignal<Ingredient[]> = input.required<Ingredient[]>();
-  update = output<{ dishId: number; foodId: number; event: Event }>();
-  delete = output<{ dishId: number; foodId: number }>();
-  add = output<{ dishId: number; foodId: number }>();
+  update = output<{ mealDishId: number; foodId: number; event: Event }>();
+  delete = output<{ mealDishId: number; foodId: number }>();
+  add = output<{ mealDishId: number; foodId: number }>();
 
   protected dishId: number = 0;
   protected foodId: number = 0;
 
   protected updateIngredient(dishId: number, foodId: number, event: Event) {
     this.update.emit({
-      dishId: dishId,
+      mealDishId: dishId,
       foodId: foodId,
       event: event,
     });
@@ -30,14 +30,14 @@ export class MealDishTable {
 
   protected deleteIngredient(dishId: number, foodId: number) {
     this.delete.emit({
-      dishId,
+      mealDishId: dishId,
       foodId,
     });
   }
 
   protected addIngredient(dishId: number, foodId: number) {
     this.add.emit({
-      dishId,
+      mealDishId: dishId,
       foodId,
     });
   }

@@ -5,7 +5,8 @@
   <tr>
     <th>Food</th>
     <th>Quantity</th>
-    <th>Unit</th>
+    <th>Serving size</th>
+    <th>Per (unit)</th>
   </tr>
   </thead>
 
@@ -17,12 +18,13 @@
           <input
             type="number"
             [value]="ingredient.quantity"
-            (change)="updateIngredient(mealDish().id, ingredient.id, $event)"
+            (change)="updateIngredient(mealDish().id, ingredient.ingredientId, $event)"
           />
         </td>
+        <td>{{ ingredient.servingSize }}</td>
         <td>{{ mapUnitIdToOption(ingredient.unitId) }}</td>
         <td>
-          <button (click)="deleteIngredient(mealDish().id, ingredient.id)">Delete</button>
+          <button (click)="deleteIngredient(mealDish().id, ingredient.ingredientId)">Delete</button>
         </td>
       </tr>
     }
@@ -36,4 +38,3 @@
   }
 </select>
 <button (click)="addIngredient(mealDish().id, foodId)">Add</button>
-<hr>

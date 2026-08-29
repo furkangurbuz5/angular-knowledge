@@ -59,17 +59,21 @@ export class MealClient {
   }
 
   modifyMealDishIngredient(
-    mealId: number,
+    mealDishId: number,
+    ingredientId: number,
     request: ModifyIngredientInMealDishRequest,
   ): Observable<void> {
-    return this.httpClient.post<void>(`http://localhost:8080/api/v1/meals/${mealId}`, {
-      quantity: request.quantity,
-    });
+    return this.httpClient.put<void>(
+      `http://localhost:8080/api/v1/meals/dish/${mealDishId}/ingredient/${ingredientId}`,
+      {
+        quantity: request.quantity,
+      },
+    );
   }
 
-  deleteMealDishIngredient(mealId: number): Observable<MealDish> {
+  deleteIngredientFromMealDish(mealDishId: number, ingredientId: number): Observable<MealDish> {
     return this.httpClient.delete<MealDish>(
-      `http://localhost:8080/api/v1/meals/dish/ingredient/${mealId}`,
+      `http://localhost:8080/api/v1/meals/dish/${mealDishId}/ingredient/${ingredientId}`,
     );
   }
 

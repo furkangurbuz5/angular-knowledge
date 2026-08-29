@@ -7,6 +7,8 @@ export interface Property {
 export interface PropertySummary {
   propertyId: number;
   value: number;
+  name: string;
+  unitId: number;
 }
 
 export interface PropertyWithValue {

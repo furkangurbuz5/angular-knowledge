@@ -5,7 +5,8 @@
   <tr>
     <th>Food</th>
     <th>Quantity</th>
-    <th>Unit</th>
+    <th>Serving size</th>
+    <th>Per (unit)</th>
   </tr>
   </thead>
 
@@ -20,6 +21,7 @@
             (change)="updateFoodInDish(dish().id, food.id, $event)"
           />
         </td>
+        <td>{{ food.servingSize }}</td>
         <td>{{ food.unit }}</td>
         <td>
           <button (click)="onDeleteFoodFromDish(dish().id, food.id)">Delete</button>

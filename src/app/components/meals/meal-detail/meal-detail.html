@@ -8,9 +8,9 @@
     }
   </select>
 
-  @if (dishWithFoods().id != 0) {
+  @if (dish().id != 0) {
     <app-meal-table
-      [dish]="dishWithFoods()"
+      [dish]="dish()"
       [foods]="foods()"
       (update)="updateFoodInDish($event.dishId, $event.foodId, $event.event)"
       (delete)="onDeleteFoodFromDish($event.dishId, $event.foodId)"
@@ -19,9 +19,8 @@
   }
 
   <div>
-    <button (click)="onAddDishToMeal(meal().id, dishWithFoods().id)">Add Dish</button>
+    <button (click)="onAddDishToMeal(meal().id, dish().id)">Add Dish</button>
   </div>
-
 
   <h5>Meal dishes</h5>
   @if (mealDishes().length > 0) {
@@ -29,10 +28,14 @@
       <app-meal-dish-table
         [mealDish]="mealDish"
         [foods]="foods()"
-        (update)="onUpdateIngredientInMealDish()"
-        (delete)="onDeleteIngredientFromMealDish()"
-        (add)="onAddIngredientToMealDish($event.dishId, $event.foodId)"
+        (update)="onUpdateIngredientInMealDish($event.mealDishId, $event.foodId, $event.event)"
+        (delete)="onDeleteIngredientFromMealDish($event.mealDishId, $event.foodId)"
+        (add)="onAddIngredientToMealDish($event.mealDishId, $event.foodId)"
       ></app-meal-dish-table>
+      <div>
+        <button (click)="deleteMealDishFromMeal(mealDish.id)">Delete Meal Dish</button>
+      </div>
+      <hr>
     }
   }
 
@@ -51,15 +54,15 @@
     </tr>
     </thead>
 
-    <!--    <tbody>-->
-    <!--      @for (property of dishWithFoods().dishProperties; track property.propertyId) {-->
-    <!--        <tr>-->
-    <!--          <td>{{ property.propertyName }}</td>-->
-    <!--          <td>{{ property.propertyAmount }}</td>-->
-    <!--          <td>{{ property.unit }}</td>-->
-    <!--        </tr>-->
-    <!--      }-->
-    <!--    </tbody>-->
+    <tbody>
+      @for (property of meal().summary; track property.propertyId) {
+        <tr>
+          <td>{{ property.name }}</td>
+          <td>{{ property.value }}</td>
+          <td>{{ mapUnitIdToOption(property.unitId) }}</td>
+        </tr>
+      }
+    </tbody>
   </table>
 
 }

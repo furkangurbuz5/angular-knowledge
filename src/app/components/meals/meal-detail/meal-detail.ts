@@ -19,7 +19,9 @@ import { MealDishTable } from '../meal-table/meal-dish-table';
 import {
   AddDishToMealRequest,
   AddIngredientToMealDishRequest,
+  ModifyIngredientInMealDishRequest,
 } from '../../../dto/meal-request.dto';
+import { mapUnitIdToOption } from '../../../util/unit-mapper';
 
 @Component({
   selector: 'app-meal-detail',
@@ -39,7 +41,7 @@ export class MealDetail {
   });
   protected readonly dishes: WritableSignal<Dish[]> = signal([]);
   protected dishId: number = 0;
-  protected dishWithFoods: WritableSignal<DishWithFoods> = signal({
+  protected dish: WritableSignal<DishWithFoods> = signal({
     id: 0,
     name: '',
     foods: [],
@@ -138,6 +140,13 @@ export class MealDetail {
       .pipe(
         tap(() => {
           this.fetchMeal(this.meal().id);
+          this.dishId = 0;
+          this.dish.set({
+            id: 0,
+            name: '',
+            foods: [],
+            dishProperties: [],
+          });
         }),
       )
       .subscribe();
@@ -159,13 +168,56 @@ export class MealDetail {
       .subscribe();
   }
 
-  protected onUpdateIngredientInMealDish() {}
+  protected onUpdateIngredientInMealDish(mealDishId: number, ingredientId: number, event: Event) {
+    const input = event.target as HTMLInputElement;
+    const quantity = parseInt(input.value);
 
-  protected onDeleteIngredientFromMealDish() {}
+    if (!quantity) {
+      return;
+    }
+
+    const request: ModifyIngredientInMealDishRequest = {
+      quantity: quantity,
+    };
+
+    this.mealClient
+      .modifyMealDishIngredient(mealDishId, ingredientId, request)
+      .pipe(
+        tap(() => {
+          this.fetchMeal(this.meal().id);
+        }),
+      )
+      .subscribe();
+  }
+
+  protected onDeleteIngredientFromMealDish(mealDishId: number, ingredientId: number) {
+    if (!mealDishId || !ingredientId) {
+      return;
+    }
+    this.mealClient
+      .deleteIngredientFromMealDish(mealDishId, ingredientId)
+      .pipe(
+        tap(() => {
+          this.fetchMeal(this.meal().id);
+        }),
+      )
+      .subscribe();
+  }
+
+  protected deleteMealDishFromMeal(mealDishId: number) {
+    this.mealClient
+      .deleteDishFromMeal(mealDishId)
+      .pipe(
+        tap(() => {
+          this.fetchMeal(this.meal().id);
+        }),
+      )
+      .subscribe();
+  }
 
   protected getDish(dishId: number) {
     if (dishId === 0) {
-      this.dishWithFoods.set({
+      this.dish.set({
         id: 0,
         name: '',
         foods: [],
@@ -179,7 +231,7 @@ export class MealDetail {
       .pipe(
         tap((dish) => {
           console.log(dish);
-          this.dishWithFoods.set(dish);
+          this.dish.set(dish);
         }),
       )
       .subscribe();
@@ -238,4 +290,6 @@ export class MealDetail {
       .pipe(tap((dishes) => this.dishes.set(dishes)))
       .subscribe();
   }
+
+  protected readonly mapUnitIdToOption = mapUnitIdToOption;
 }
