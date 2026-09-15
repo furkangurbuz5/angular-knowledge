@@ -108,11 +108,7 @@ export class FoodDetail {
     });
   }
 
-  protected patchFood(food: Ingredient){
-    this.editable.update((editable) => {
-      return !editable;
-    });
-
+  protected patchFood(){
 
   }
 

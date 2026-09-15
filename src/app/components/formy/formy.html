@@ -1,0 +1,15 @@
+<form [formGroup]="formy" (ngSubmit)="onSubmit()">
+  <label for="name">Overtreding</label>
+  <input name="name" formControlName="name" />
+
+  <label for="action">Handhavingsactie</label>
+  <button type="button" name="action" [disabled]="isActionArrayComplete || !isFormValid" (click)="onAddAction()">Add</button>
+
+
+  @for (action of actionArray; track action.id) {
+    <app-user-action-card
+      [userAction]="action">
+    </app-user-action-card>
+  }
+  <button [disabled]="!isFormValid" type="submit">Submit</button>
+</form>

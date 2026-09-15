@@ -9,6 +9,7 @@ import { DishDetail } from './components/collections/collection-detail/dish-deta
 import { DishList } from './components/collections/dish-list';
 import { MealList } from './components/meals/meal-list';
 import { MealDetail } from './components/meals/meal-detail/meal-detail';
+import { Formy } from './components/formy/formy';
 
 export const routes: Routes = [
   {
@@ -65,5 +66,10 @@ export const routes: Routes = [
     path: 'rxjsdemo',
     component: RxjsDemo,
     title: 'RxJS Demo',
+  },
+  {
+    path: 'formy',
+    component: Formy,
+    title: 'Form',
   },
 ];
