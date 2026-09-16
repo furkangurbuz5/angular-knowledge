@@ -38,16 +38,6 @@ export class Formy {
 
   ngOnInit() {
     this.openFormSubscription();
-    this.action();
-  }
-
-  action() {
-    const a: UserAction = { dateCreated: new Date(), description: '', id: 0, name: '' };
-    const b: UserAction = { dateCreated: new Date(), description: '', id: 0, name: '' };
-    const c = structuredClone(b);
-
-    console.log(b === c);
-    console.log(a !== c);
   }
 
   ngOnDestroy() {
